@@ -17,12 +17,18 @@ import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 import assignment.prm.chartmarkapplication.R;
 
 public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAdapter.GeneralProductItemViewHolder> {
+    public interface OnItemClickListener {
+        void onItemClick(GeneralProduct item);
+    }
+
     private List<GeneralProduct> generalProducts;
     private Context context;
+    private final OnItemClickListener listener;
 
-    public GeneralProductAdapter(List<GeneralProduct> generalProducts, Context context){
+    public GeneralProductAdapter(List<GeneralProduct> generalProducts, Context context, OnItemClickListener listener){
         this.generalProducts = generalProducts;
         this.context = context;
+        this.listener = listener;
     }
     @NonNull
     @Override
@@ -42,7 +48,8 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
 //        view.tvBrand.setText("Brand: " + BrandAdapter.getBrandName(generalProduct.brandId, context));
         view.tvBrand.setText("Brand: "+ generalProduct.brandId);
         view.tvCategory.setText(generalProduct.category);
-        view.tvID.setText(generalProduct.ID);
+        view.tvID.setText(generalProduct.ID + "");
+        view.bind(generalProducts.get(i), listener);
     }
 
     @Override
@@ -64,6 +71,14 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
             ivImageProduct = itemView.findViewById(R.id.iv_image);
             tvID = itemView.findViewById(R.id.tv_ID);
             tvCategory = itemView.findViewById(R.id.tv_category);
+        }
+
+        public void bind(final GeneralProduct item, final OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View v) {
+                    listener.onItemClick(item);
+                }
+            });
         }
     }
 }

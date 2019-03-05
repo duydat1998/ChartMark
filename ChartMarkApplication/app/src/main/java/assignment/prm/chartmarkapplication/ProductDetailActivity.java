@@ -9,19 +9,46 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-
+    private TextView tvCategory, tvName, tvBrand, tvPrice;
+    private ImageView image1, image2;
+    private String category, id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
         setMenu();
+        initializeControl();
+
+        Intent intent = getIntent();
+        if(intent.hasExtra("category")){
+            category = intent.getStringExtra("category");
+        }
+        if(intent.hasExtra("id")){
+            id = intent.getStringExtra("id");
+        }
+        getAPIDataProduct(category, id);
     }
 
+    private void initializeControl(){
+        tvBrand = findViewById(R.id.tv_brand);
+        tvCategory = findViewById(R.id.tv_category);
+        tvName = findViewById(R.id.tv_product_name);
+        tvPrice = findViewById(R.id.tv_average_price);
+
+        image1 = findViewById(R.id.iv_product_image1);
+        image2 = findViewById(R.id.iv_product_image2);
+    }
+
+    private void getAPIDataProduct(String category, String id){
+
+    }
     private void setMenu() {
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -113,5 +140,16 @@ public class ProductDetailActivity extends AppCompatActivity {
     public void clickToViewCompareList(View view) {
         Intent intent = new Intent(this, CompareActivity.class);
         startActivity(intent);
+    }
+
+    public void clickToAddToCompareList(View view) {
+
+    }
+
+    public void clickToAddToLoveList(View view) {
+
+    }
+
+    public void clickToSearchOnInternet(View view) {
     }
 }
