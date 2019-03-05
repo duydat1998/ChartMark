@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@color/colorSecondaryLight">
+
+    </item>
+    <item android:gravity="fill" android:width="720px" android:height="1280px">
+        <bitmap
+            android:gravity="center_horizontal|center_vertical"
+            android:src="@drawable/spash_screen_logo"
+            />
+    </item>
+</layer-list>

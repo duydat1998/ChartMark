@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_laptop"
+        android:icon="@drawable/ic_menu_laptop"
+        android:title="Laptop"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
+        android:id="@+id/nav_keyboard"
+        android:icon="@drawable/ic_menu_keyboard"
+        android:title="Keyboard"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
+        android:id="@+id/nav_headphone"
+        android:icon="@drawable/ic_menu_headphones"
+        android:title="Headphones"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
+        android:id="@+id/nav_vga"
+        android:icon="@drawable/ic_menu_vga"
+        android:title="VGA"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
+        android:id="@+id/nav_mouse"
+        android:icon="@drawable/ic_menu_mouse"
+        android:title="Mouse"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
+        android:id="@+id/nav_cpu"
+        android:icon="@drawable/ic_menu_processor"
+        android:title="CPU"
+        android:textColor="@color/colorPrimaryDark"/>
+
+</menu>
