@@ -39,7 +39,10 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                 .load(generalProduct.image1)
                 .into(view.ivImageProduct);
         view.tvName.setText(generalProduct.name);
-        view.tvBrand.setText("Brand: " + generalProduct.brandId);
+//        view.tvBrand.setText("Brand: " + BrandAdapter.getBrandName(generalProduct.brandId, context));
+        view.tvBrand.setText("Brand: "+ generalProduct.brandId);
+        view.tvCategory.setText(generalProduct.category);
+        view.tvID.setText(generalProduct.ID);
     }
 
     @Override
@@ -51,12 +54,16 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
         public TextView tvName;
         public TextView tvBrand;
         public ImageView ivImageProduct;
+        public TextView tvID;
+        public TextView tvCategory;
 
         public GeneralProductItemViewHolder(View itemView) {
             super(itemView);
             tvName =  itemView.findViewById(R.id.tv_product_name);
             tvBrand =  itemView.findViewById(R.id.tv_brand);
             ivImageProduct = itemView.findViewById(R.id.iv_image);
+            tvID = itemView.findViewById(R.id.tv_ID);
+            tvCategory = itemView.findViewById(R.id.tv_category);
         }
     }
 }
