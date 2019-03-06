@@ -9,9 +9,35 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.moshi.JsonAdapter;
+import com.squareup.moshi.Moshi;
+import com.squareup.moshi.Types;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.security.Key;
+import java.util.List;
+
+import assignment.prm.chartmarkapplication.Model.CPU;
+import assignment.prm.chartmarkapplication.Model.GeneralProduct;
+import assignment.prm.chartmarkapplication.Model.Headphone;
+import assignment.prm.chartmarkapplication.Model.Keyboard;
+import assignment.prm.chartmarkapplication.Model.Laptop;
+import assignment.prm.chartmarkapplication.Model.Mouse;
+import assignment.prm.chartmarkapplication.Model.VGA;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -19,6 +45,9 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView tvCategory, tvName, tvBrand, tvPrice;
     private ImageView image1, image2;
     private String category, id;
+    private ImageButton btnAddLove;
+    private GeneralProduct generalProduct;
+    private boolean isInLoveList = false, isInCompareList = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +63,11 @@ public class ProductDetailActivity extends AppCompatActivity {
             id = intent.getStringExtra("id");
         }
         getAPIDataProduct(category, id);
+
+        if(((GlobalVariable) this.getApplication()).checkInLoveList(generalProduct)){
+            btnAddLove.setImageResource(R.drawable.icon_heart);
+            isInLoveList = true;
+        }
     }
 
     private void initializeControl(){
@@ -44,11 +78,34 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         image1 = findViewById(R.id.iv_product_image1);
         image2 = findViewById(R.id.iv_product_image2);
+
+        btnAddLove = findViewById(R.id.btn_add_love);
     }
 
     private void getAPIDataProduct(String category, String id){
 
+        switch (category){
+            case "laptop":
+                getLaptop( id);
+                break;
+            case "cpu":
+                getCPU(id);
+                break;
+            case "vga":
+                getVGA(id);
+                break;
+            case "headphone":
+                getHeadphone(id);
+                break;
+            case "mouse":
+                getMouse(id);
+                break;
+            case "keyboard":
+                getKeyboard(id);
+                break;
+        }
     }
+
     private void setMenu() {
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -143,13 +200,297 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     public void clickToAddToCompareList(View view) {
-
+        Toast.makeText(this, "Product is added to Compare list.", Toast.LENGTH_SHORT).show();
     }
 
     public void clickToAddToLoveList(View view) {
+        String message = "";
+        if(isInLoveList){
+            message = ((GlobalVariable) this.getApplication()).removeFromLoveList(generalProduct);
+            btnAddLove.setImageResource(R.drawable.icon_hollow_heart);
+        } else {
+            message = ((GlobalVariable) this.getApplication()).addToLoveList(generalProduct);
+            btnAddLove.setImageResource(R.drawable.icon_heart);
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
     }
 
     public void clickToSearchOnInternet(View view) {
+        Toast.makeText(this, "Sorry, This function not completed", Toast.LENGTH_SHORT).show();
     }
+
+    private void getLaptop(String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/Laptops/"+id).build();
+        Type productType = Types.newParameterizedType(Laptop.class);
+        final JsonAdapter<Laptop> jsonAdapter = moshi.adapter(productType);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final Laptop item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("Laptop "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getCPU( String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/CPUs/"+id).build();
+        Type productType = Types.newParameterizedType(CPU.class);
+        final JsonAdapter<CPU> jsonAdapter = moshi.adapter(productType);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final CPU item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("CPU "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getVGA( String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/VGAs/"+id).build();
+        Type productType = Types.newParameterizedType(VGA.class);
+        final JsonAdapter<VGA> jsonAdapter = moshi.adapter(productType);
+
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final VGA item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("VGA "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getHeadphone( String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/Headphones/"+id).build();
+        Type productType = Types.newParameterizedType(Headphone.class);
+        final JsonAdapter<Headphone> jsonAdapter = moshi.adapter(productType);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final Headphone item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("Headphone "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getMouse( String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/Mouses/"+id).build();
+        Type productType = Types.newParameterizedType(Mouse.class);
+        final JsonAdapter<Mouse> jsonAdapter = moshi.adapter(productType);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final Mouse item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("Mouse "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    private void getKeyboard( String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        Moshi moshi = new Moshi.Builder().build();
+
+//        String domain = getResources().getString(R.string.home_api);
+//        String domain = getResources().getString(R.string.school_api);
+        String domain = getResources().getString(R.string.virtual_api);
+        Request request = new Request.Builder()
+                .url(domain + "api/Keyboards/"+id).build();
+        Type productType = Types.newParameterizedType(Keyboard.class);
+        final JsonAdapter<Keyboard> jsonAdapter = moshi.adapter(productType);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String json = response.body().string();
+                final Keyboard item = jsonAdapter.fromJson(json);
+                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        tvCategory.setText(item.category.toUpperCase());
+                        tvBrand.setText(item.brandId);
+                        tvName.setText("Keyboard "+item.name);
+                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        if(item.image1 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
+                        } else{
+                            image1.setVisibility(View.INVISIBLE);
+                        }
+                        if(item.image2 != null){
+                            Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
+                        } else{
+                            image2.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+
+
 }
