@@ -45,6 +45,23 @@
 
 
         </android.support.v7.widget.Toolbar>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Love list"
+            android:textSize="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/txtLoveList"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rvLoveProducts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="10dp"
+            />
     </LinearLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

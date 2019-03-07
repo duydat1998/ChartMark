@@ -19,4 +19,17 @@ public class GeneralProduct {
         this.name = name;
         this.image1 = image1;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof GeneralProduct)){
+            return false;
+        }
+        GeneralProduct other = (GeneralProduct) obj;
+
+        if(this.ID ==  other.ID){
+            return true;
+        }
+        return false;
+    }
 }

@@ -7,4 +7,5 @@
 
     <string name="localhost_api">http://localhost:/</string>
 
+    <string name="google_search">https://www.google.com/search?q=</string>
 </resources>

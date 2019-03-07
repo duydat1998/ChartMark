@@ -1,6 +1,7 @@
 package assignment.prm.chartmarkapplication;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -45,7 +46,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView tvCategory, tvName, tvBrand, tvPrice;
     private ImageView image1, image2;
     private String category, id;
-    private ImageButton btnAddLove;
+    private ImageButton btnAddLove, btnAddCompare;
     private GeneralProduct generalProduct;
     private boolean isInLoveList = false, isInCompareList = false;
     @Override
@@ -80,6 +81,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         image2 = findViewById(R.id.iv_product_image2);
 
         btnAddLove = findViewById(R.id.btn_add_love);
+        btnAddCompare = findViewById(R.id.btn_add_compare);
     }
 
     private void getAPIDataProduct(String category, String id){
@@ -200,16 +202,19 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     public void clickToAddToCompareList(View view) {
+        btnAddCompare.setImageResource(R.drawable.icon_added);
         Toast.makeText(this, "Product is added to Compare list.", Toast.LENGTH_SHORT).show();
     }
 
     public void clickToAddToLoveList(View view) {
-        String message = "";
+        String message;
         if(isInLoveList){
             message = ((GlobalVariable) this.getApplication()).removeFromLoveList(generalProduct);
+            isInLoveList = false;
             btnAddLove.setImageResource(R.drawable.icon_hollow_heart);
         } else {
             message = ((GlobalVariable) this.getApplication()).addToLoveList(generalProduct);
+            isInLoveList = true;
             btnAddLove.setImageResource(R.drawable.icon_heart);
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -217,7 +222,17 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     public void clickToSearchOnInternet(View view) {
-        Toast.makeText(this, "Sorry, This function not completed", Toast.LENGTH_SHORT).show();
+        String searchURI = getResources().getString(R.string.google_search);
+        String productName = tvName.getText().toString();
+        String[] s = productName.split(" ");
+        for(int i=0; i<s.length; i++){
+            searchURI+=s[i];
+            if(i!= s.length-1){
+                searchURI += "+";
+            }
+        }
+        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchURI));
+        startActivity(Intent.createChooser(intent,"Open using:"));
     }
 
     private void getLaptop(String id){

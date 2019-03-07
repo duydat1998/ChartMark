@@ -4,7 +4,9 @@ import android.app.Application;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,16 @@ public class GlobalVariable extends Application {
     }
 
     public void loadCompareList(){
+        SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
 
+        String json = sharedPreferences.getString("compare",null);
+        if(json != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<GeneralProduct>>(){}.getType();
+            loveList = gson.fromJson(json, type);
+        } else {
+            loveList = new ArrayList<>();
+        }
     }
     public String addToCompareList(){
         String message = "";
@@ -34,10 +45,12 @@ public class GlobalVariable extends Application {
 
     public void loadLoveList(){
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
-        Gson gson = new Gson();
-        String json = sharedPreferences.getString("lovelist","");
-        if(!json.isEmpty()){
-            loveList = gson.fromJson(json, List.class);
+
+        String json = sharedPreferences.getString("lovelist",null);
+        if(json != null){
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<GeneralProduct>>(){}.getType();
+            loveList = gson.fromJson(json, type);
         } else {
             loveList = new ArrayList<>();
         }
@@ -66,6 +79,9 @@ public class GlobalVariable extends Application {
             if(loveList == null){
                 loveList = new ArrayList<>();
             }
+            if(checkInLoveList(product)){
+                return "Product is already in love list";
+            }
             loveList.add(product);
             saveLoveList();
             loadLoveList();
@@ -82,12 +98,18 @@ public class GlobalVariable extends Application {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
         String json = gson.toJson(loveList);
+        editor.remove("lovelist");
+        editor.clear();
         editor.putString("lovelist", json);
         editor.commit();
     }
 
     public boolean checkInLoveList(GeneralProduct product){
         return loveList.contains(product);
+    }
+
+    public List<GeneralProduct> getLoveList(){
+        return loveList;
     }
 
 }

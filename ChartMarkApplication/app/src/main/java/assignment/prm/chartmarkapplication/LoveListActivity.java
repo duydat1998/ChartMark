@@ -7,18 +7,55 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.List;
+
+import assignment.prm.chartmarkapplication.Adapter.GeneralProductAdapter;
+import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 
 public class LoveListActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-
+    private RecyclerView rvLoveProducts;
+    private TextView tvLoveList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_love_list);
+        setMenu();
+
+        tvLoveList = findViewById(R.id.txtLoveList);
+        rvLoveProducts = findViewById(R.id.rvLoveProducts);
+        rvLoveProducts.setLayoutManager(new GridLayoutManager(this, 2));
+
+        final List<GeneralProduct> loveList =((GlobalVariable) getApplication()).getLoveList();
+        if(loveList != null && loveList.size() > 0){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvLoveList.setText(loveList.size() + " product(s) in Love List.");
+                    rvLoveProducts.setAdapter(new GeneralProductAdapter(loveList, LoveListActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(GeneralProduct item) {
+                            Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                            intent.putExtra("category", item.category);
+                            intent.putExtra("id", item.ID+"");
+                            startActivity(intent);
+                        }
+                    }));
+                }
+            });
+
+        } else {
+            tvLoveList.setText("There is no product in Love list.");
+        }
+
     }
 
     private void setMenu() {
