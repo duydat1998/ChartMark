@@ -65,9 +65,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         getAPIDataProduct(category, id);
 
-        if(((GlobalVariable) this.getApplication()).checkInLoveList(generalProduct)){
+        if(((GlobalVariable) getApplication()).checkInLoveList(generalProduct)){
             btnAddLove.setImageResource(R.drawable.icon_heart);
             isInLoveList = true;
+        }
+
+        if(((GlobalVariable) getApplication()).checkInCompareList(generalProduct)){
+            btnAddCompare.setImageResource(R.drawable.icon_added);
+            isInCompareList = true;
         }
     }
 

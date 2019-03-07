@@ -105,7 +105,16 @@ public class GlobalVariable extends Application {
     }
 
     public boolean checkInLoveList(GeneralProduct product){
+        if(loveList == null){
+            return false;
+        }
         return loveList.contains(product);
+    }
+    public boolean checkInCompareList(GeneralProduct product){
+        if(compareList == null){
+            return false;
+        }
+        return compareList.contains(product);
     }
 
     public List<GeneralProduct> getLoveList(){
