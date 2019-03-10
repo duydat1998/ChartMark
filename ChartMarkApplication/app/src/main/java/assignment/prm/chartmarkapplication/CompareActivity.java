@@ -7,19 +7,55 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
+import android.widget.TextView;
+
+import java.util.List;
+
+import assignment.prm.chartmarkapplication.Adapter.GeneralProductAdapter;
+import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 
 public class CompareActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-
+    private RecyclerView rvCompareProduct;
+    private TextView tvCompareList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compare);
         setMenu();
+        rvCompareProduct = findViewById(R.id.rvCompareProducts);
+        tvCompareList = findViewById(R.id.txtCompareList);
+
+        rvCompareProduct.setLayoutManager(new GridLayoutManager(this, 2));
+
+        final List<GeneralProduct> compareList =((GlobalVariable) getApplication()).getCompareList();
+        if(compareList != null && compareList.size() > 0){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvCompareList.setText(compareList.size() + " product(s) in Compare List.");
+                    rvCompareProduct.setAdapter(new GeneralProductAdapter(compareList, CompareActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(GeneralProduct item) {
+                            Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                            intent.putExtra("category", item.category);
+                            intent.putExtra("id", item.ID+"");
+                            startActivity(intent);
+                        }
+                    }));
+                }
+            });
+
+        } else {
+            tvCompareList.setText("There is no product in Compare list.");
+        }
+
     }
 
     private void setMenu() {
@@ -113,5 +149,8 @@ public class CompareActivity extends AppCompatActivity {
     public void clickToViewCompareList(View view) {
         Intent intent = new Intent(this, CompareActivity.class);
         startActivity(intent);
+    }
+
+    public void clickToCompare(View view) {
     }
 }

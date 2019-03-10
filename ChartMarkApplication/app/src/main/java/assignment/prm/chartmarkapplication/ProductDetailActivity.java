@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +51,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private ImageButton btnAddLove, btnAddCompare;
     private GeneralProduct generalProduct;
     private boolean isInLoveList = false, isInCompareList = false;
+    private TableLayout tbProductDetail;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,12 +68,14 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
         getAPIDataProduct(category, id);
 
-        if(((GlobalVariable) getApplication()).checkInLoveList(generalProduct)){
+        GeneralProduct tmp = new GeneralProduct(Integer.parseInt(id), category);
+
+        if(((GlobalVariable) getApplication()).checkInLoveList(tmp)){
             btnAddLove.setImageResource(R.drawable.icon_heart);
             isInLoveList = true;
         }
 
-        if(((GlobalVariable) getApplication()).checkInCompareList(generalProduct)){
+        if(((GlobalVariable) getApplication()).checkInCompareList(tmp)){
             btnAddCompare.setImageResource(R.drawable.icon_added);
             isInCompareList = true;
         }
@@ -87,6 +92,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         btnAddLove = findViewById(R.id.btn_add_love);
         btnAddCompare = findViewById(R.id.btn_add_compare);
+
+        tbProductDetail = findViewById(R.id.tblProductDetail);
     }
 
     private void getAPIDataProduct(String category, String id){
@@ -207,8 +214,19 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     public void clickToAddToCompareList(View view) {
-        btnAddCompare.setImageResource(R.drawable.icon_added);
-        Toast.makeText(this, "Product is added to Compare list.", Toast.LENGTH_SHORT).show();
+        String message;
+        if(isInCompareList){
+            message = ((GlobalVariable) this.getApplication()).removeFromCompareList(generalProduct);
+            isInCompareList = false;
+            btnAddCompare.setImageResource(R.drawable.icon_add);
+        } else {
+            message = ((GlobalVariable) this.getApplication()).addToCompareList(generalProduct);
+            if(!message.contains("Add FAIL")&&!message.contains("wrong")){
+                isInCompareList = true;
+                btnAddCompare.setImageResource(R.drawable.icon_added);
+            }
+        }
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     public void clickToAddToLoveList(View view) {
@@ -219,8 +237,10 @@ public class ProductDetailActivity extends AppCompatActivity {
             btnAddLove.setImageResource(R.drawable.icon_hollow_heart);
         } else {
             message = ((GlobalVariable) this.getApplication()).addToLoveList(generalProduct);
-            isInLoveList = true;
-            btnAddLove.setImageResource(R.drawable.icon_heart);
+            if(!message.contains("wrong")){
+                isInLoveList = true;
+                btnAddLove.setImageResource(R.drawable.icon_heart);
+            }
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
 
@@ -279,6 +299,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
@@ -324,6 +345,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
@@ -370,6 +392,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
@@ -415,6 +438,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
@@ -460,6 +484,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
@@ -505,12 +530,105 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else{
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        initializeProductDetailTable(item);
                     }
                 });
             }
         });
     }
 
+
+    private void initializeProductDetailTable(Object product){
+
+        if(product instanceof Laptop){
+            Laptop item = (Laptop) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Type", item.type);
+            addTableRow("Produce year", item.year+"");
+            addTableRow("Screen size", item.screenSize+" inches");
+            addTableRow("Weight", item.weight +" kg");
+            addTableRow("Chip", item.chip);
+            addTableRow("RAM", item.ram);
+            addTableRow("ROM", item.rom);
+            addTableRow("Webcam", item.webcam);
+            addTableRow("Wifi", item.wifi);
+            addTableRow("Operating System", item.OS);
+            addTableRow("Battery", item.battery);
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+        if(product instanceof CPU){
+            CPU item = (CPU) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Socket", item.socket+"");
+            addTableRow("TDP", item.TDP +"");
+            addTableRow("Thread", item.thread+"");
+            addTableRow("Clock Speed", item.clockSpeed+"");
+            addTableRow("Weight", item.weight+"");
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+        if(product instanceof Headphone){
+            Headphone item = (Headphone) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Type", item.type);
+            addTableRow("Micro", item.micro);
+            addTableRow("Jack", item.jack);
+            addTableRow("Frequency range", item.frequencyRange);
+            addTableRow("Bluetooth", item.bluetooth);
+            addTableRow("Length", item.length+ "m");
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+        if(product instanceof Mouse){
+            Mouse item = (Mouse) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Type", item.type);
+            addTableRow("Wireless", item.wireless);
+            addTableRow("Bluetooth", item.bluetooth);
+            addTableRow("Weight", item.weight + "kg");
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+        if(product instanceof Keyboard){
+            Keyboard item = (Keyboard) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Connection", item.connect);
+            addTableRow("Bluetooth", item.bluetooth);
+            addTableRow("Height", item.height + "cm");
+            addTableRow("Length", item.length + " cm");
+            addTableRow("Width", item.width + " cm");
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+        if(product instanceof VGA){
+            VGA item = (VGA) product;
+            addTableRow("Category", item.category);
+            addTableRow("Name", item.name);
+            addTableRow("Brand", item.brandId);
+            addTableRow("Standard memory", item.standardMemory+"GB");
+            addTableRow("Max Screen Resolution", item.maxScreenResolution);
+            addTableRow("Weight", item.weight+"kg");
+            addTableRow("Size", item.size);
+            addTableRow("Average price", item.averagePrice +" VND");
+        }
+    }
+
+    private void addTableRow(String key, String value){
+        TextView col1 = new TextView(this);
+        TextView col2 = new TextView(this);
+        TableRow row = new TableRow(this);
+        col1.setText(key);
+        col2.setText(value);
+        row.addView(col1);
+        row.addView(col2);
+        tbProductDetail.addView(row);
+    }
 
 
 }

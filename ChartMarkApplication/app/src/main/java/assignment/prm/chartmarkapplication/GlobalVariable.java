@@ -14,32 +14,90 @@ import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 
 
 public class GlobalVariable extends Application {
-    private List<Object> compareList;
+    private List<GeneralProduct> compareList;
     private List<GeneralProduct> loveList;
     private String compareCategory;
 
-    public String getCompareCategory() {
-        return compareCategory;
-    }
-
-    public void setCompareCategory(String compareCategory) {
-        this.compareCategory = compareCategory;
-    }
-
     public void loadCompareList(){
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
-
-        String json = sharedPreferences.getString("compare",null);
+        String compareCategory = sharedPreferences.getString("compareCategory", null);
+        String json = sharedPreferences.getString("compareList",null);
         if(json != null){
             Gson gson = new Gson();
             Type type = new TypeToken<List<GeneralProduct>>(){}.getType();
-            loveList = gson.fromJson(json, type);
+            compareList = gson.fromJson(json, type);
         } else {
-            loveList = new ArrayList<>();
+            compareList = new ArrayList<>();
         }
     }
-    public String addToCompareList(){
+
+    public String addToCompareList(GeneralProduct product){
         String message = "";
+        try{
+            if(compareList == null){
+                compareList = new ArrayList<>();
+                compareList.add(product);
+                compareCategory = product.category;
+            } else {
+                if(compareList.isEmpty()){
+                    compareList.add(product);
+                    compareCategory = product.category;
+                    return "Product is added to Compare list";
+                } else {
+                    if(compareList.size() == 2){
+                        return "Add no more than 2 products to Compare List. Add FAIL";
+                    }
+                    if(compareCategory.equals(product.category)){
+                        if(checkInCompareList(product)){
+                            return "Product is already in compare list";
+                        } else {
+                            compareList.add(product);
+                            message = "Product is added to Compare list";
+                        }
+                    } else {
+                        return "This product is not a "+compareCategory+" to be added to Compare List. Add FAIL";
+                    }
+                }
+            }
+            saveCompareList();
+            loadCompareList();
+        } catch (Exception e){
+            e.printStackTrace();
+            message = "Something go wrong, please try again";
+        }
+        return message;
+    }
+
+    public void saveCompareList(){
+        SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(compareList);
+        editor.remove("compareList");
+        editor.putString("compareList", json);
+        editor.remove("compareCategory");
+        editor.putString("compareCategory", compareCategory);
+        editor.commit();
+    }
+
+    public String removeFromCompareList(GeneralProduct product){
+        String message;
+        try{
+            if(compareList != null){
+                if(compareList.contains(product)){
+                    compareList.remove(product);
+                }
+                if(compareList.isEmpty()){
+                    compareCategory = null;
+                }
+            }
+            saveCompareList();
+            loadCompareList();
+            message = "Product is removed from Compare list";
+        } catch (Exception e){
+            e.printStackTrace();
+            message = "Something go wrong, please try again";
+        }
         return message;
     }
 
@@ -99,7 +157,6 @@ public class GlobalVariable extends Application {
         Gson gson = new Gson();
         String json = gson.toJson(loveList);
         editor.remove("lovelist");
-        editor.clear();
         editor.putString("lovelist", json);
         editor.commit();
     }
@@ -119,6 +176,10 @@ public class GlobalVariable extends Application {
 
     public List<GeneralProduct> getLoveList(){
         return loveList;
+    }
+
+    public List<GeneralProduct> getCompareList(){
+        return compareList;
     }
 
 }

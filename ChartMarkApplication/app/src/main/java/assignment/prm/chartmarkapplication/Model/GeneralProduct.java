@@ -12,6 +12,14 @@ public class GeneralProduct {
 
     }
 
+    public GeneralProduct(int ID, String category){
+        this.ID = ID;
+        this.brandId = null;
+        this.category = category;
+        this.name = null;
+        this.image1 = null;
+    }
+
     public GeneralProduct(int ID, String category, String name, String brandId, String image1){
         this.ID = ID;
         this.brandId = brandId;
@@ -27,7 +35,7 @@ public class GeneralProduct {
         }
         GeneralProduct other = (GeneralProduct) obj;
 
-        if(this.ID ==  other.ID){
+        if(this.category.equals(other.category) && this.ID ==  other.ID){
             return true;
         }
         return false;
