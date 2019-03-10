@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -623,8 +624,22 @@ public class ProductDetailActivity extends AppCompatActivity {
         TextView col1 = new TextView(this);
         TextView col2 = new TextView(this);
         TableRow row = new TableRow(this);
+
+        TableRow.LayoutParams lp = new TableRow.LayoutParams();
+        lp.weight = 1; //column weight
+        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.4f);
+        col1.setLayoutParams(lp);
+        col1.setPadding(10,1,10,1);
+
+        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.6f);
+        col2.setLayoutParams(lp);
+        col2.setPadding(10,1,10,1);
+
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
         col1.setText(key);
         col2.setText(value);
+
         row.addView(col1);
         row.addView(col2);
         tbProductDetail.addView(row);
