@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -135,5 +136,16 @@ public class MainActivity extends AppCompatActivity {
     public void clickToViewCompareList(View view) {
         Intent intent = new Intent(this, CompareActivity.class);
         startActivity(intent);
+    }
+
+    public void clickToSearch(View view) {
+        EditText edtSearch = findViewById(R.id.edtSearch);
+        if(edtSearch.getText().toString().trim().isEmpty()){
+            Toast.makeText(this, "Item can't be empty! Please enter something", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Search Success", Toast.LENGTH_SHORT).show();
+        }
+        //Intent intent = new Intent(this,);
+
     }
 }
