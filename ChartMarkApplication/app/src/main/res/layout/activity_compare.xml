@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".CompareActivity"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -46,23 +47,30 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Compare list"
-            android:textSize="20dp"
-            />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtCompareList"/>
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Compare list"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtCompareList"/>
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvCompareProducts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="10dp"
-            />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rvCompareProducts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="10dp"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
     <LinearLayout
@@ -70,16 +78,33 @@
         android:layout_height="match_parent"
         android:gravity="bottom"
         android:orientation="vertical">
-        <Button
-            android:layout_width="200dp"
-            android:layout_gravity="center"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="compare"
-            android:background="@color/colorPrimary"
-            android:textColor="@color/colorSecondaryLight"
-            android:layout_marginBottom="20dp"
-            android:onClick="clickToCompare"
-            />
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+            <Button
+                android:layout_width="200dp"
+                android:layout_gravity="center"
+                android:layout_height="45dp"
+                android:text="compare"
+                android:layout_weight="3"
+                android:background="@color/colorPrimary"
+                android:layout_marginBottom="20dp"
+                android:onClick="clickToCompare"
+                android:layout_margin="10dp"
+                />
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:background="@color/colorPrimary"
+                android:layout_margin="10dp"
+                android:src="@drawable/garbage_icon"
+                android:onClick="clickToEmptyCompareList"
+                />
+        </LinearLayout>
+
     </LinearLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

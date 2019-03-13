@@ -1,6 +1,7 @@
 package assignment.prm.chartmarkapplication;
 
 import android.app.Application;
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
@@ -17,6 +18,18 @@ public class GlobalVariable extends Application {
     private List<GeneralProduct> compareList;
     private List<GeneralProduct> loveList;
     private String compareCategory;
+
+    private static Context appContext;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        appContext = getApplicationContext();
+    }
+
+    public static Context getAppContext(){
+        return appContext;
+    }
 
     public void loadCompareList(){
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
@@ -101,6 +114,26 @@ public class GlobalVariable extends Application {
         return message;
     }
 
+    public String emptyCompareList(){
+        String message;
+        try{
+            if(compareList != null){
+                if(compareList.isEmpty()){
+                    compareCategory = null;
+                } else {
+                    compareList.clear();
+                    compareCategory = null;
+                }
+            }
+            saveCompareList();
+            loadCompareList();
+            message = "Compare list is cleared";
+        } catch (Exception e){
+            e.printStackTrace();
+            message = "Something go wrong, please try again";
+        }
+        return message;
+    }
     public void loadLoveList(){
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
 
@@ -131,6 +164,7 @@ public class GlobalVariable extends Application {
         }
         return message;
     }
+
     public String addToLoveList(GeneralProduct product){
         String message;
         try{
@@ -167,6 +201,7 @@ public class GlobalVariable extends Application {
         }
         return loveList.contains(product);
     }
+
     public boolean checkInCompareList(GeneralProduct product){
         if(compareList == null){
             return false;

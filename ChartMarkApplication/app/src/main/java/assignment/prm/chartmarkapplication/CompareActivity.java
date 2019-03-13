@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,7 +32,6 @@ public class CompareActivity extends AppCompatActivity {
         setMenu();
         rvCompareProduct = findViewById(R.id.rvCompareProducts);
         tvCompareList = findViewById(R.id.txtCompareList);
-
         rvCompareProduct.setLayoutManager(new GridLayoutManager(this, 2));
 
         final List<GeneralProduct> compareList =((GlobalVariable) getApplication()).getCompareList();
@@ -152,5 +152,13 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     public void clickToCompare(View view) {
+    }
+
+    public void clickToEmptyCompareList(View view) {
+        String message = ((GlobalVariable) getApplication()).emptyCompareList();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, CompareActivity.class);
+        startActivity(intent);
+        finish();
     }
 }
