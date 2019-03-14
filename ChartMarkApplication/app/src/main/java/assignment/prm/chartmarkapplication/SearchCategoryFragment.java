@@ -42,16 +42,12 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class SearchCategoryFragment extends Fragment {
-    //Decalre for using findId in Fragment
-    private View searchProduct;
 
-    private DrawerLayout drawerLayout;
-
-    private TextView txtCategory;
     private RecyclerView rvSearchProducts;
-    private Spinner productCategory;
+    private TextView tvSearchResult;
+    private String searchCategory, keyword;
 
-    //No matter
+
     public SearchCategoryFragment() {
 
     }
@@ -59,49 +55,25 @@ public class SearchCategoryFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        Button btnSearch = getActivity().findViewById(R.id.btnSearch);
-        btnSearch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                productCategory = searchProduct.findViewById(R.id.spnCategory);
-                //category = productCategory.getSelectedItem().toString();
 
-                EditText productName = searchProduct.findViewById(R.id.edtSearch);
-                //getAPIDataProduct(category, productName);
-                if((productCategory.toString() == "laptop" || productCategory.toString() == "headphone"
-                        || productCategory.toString() == "keyboard" || productCategory.toString() == "vga"
-                        || productCategory.toString() == "mouse" || productCategory.toString() == "cpu")
-                        && !searchProduct.toString().trim().isEmpty()
-                ){
-                    showProducts(productName);
-                }
-            }
-        });
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        searchProduct = inflater.inflate(R.layout.fragment_search_category, container, false);
-        //initializeControl();
-        return searchProduct;
-    }
-
-
-    public void clickToViewLoveList(View view) {
-        Intent intent = new Intent(getActivity(), LoveListActivity.class);
-        startActivity(intent);
-    }
-
-    public void clickToViewCompareList(View view) {
-        Intent intent = new Intent(getActivity(), CompareActivity.class);
-        startActivity(intent);
-    }
-
-    private void showProducts(EditText productName) {
-        rvSearchProducts = searchProduct.findViewById(R.id.rvSearchProducts);
+        View view = inflater.inflate(R.layout.fragment_search_category, container, false);
+        rvSearchProducts = view.findViewById(R.id.rvSearchProducts);
         rvSearchProducts.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        tvSearchResult = view.findViewById(R.id.tvSearchResult);
+        Bundle bundle = getArguments();
+        searchCategory = bundle.getString("searchCategory", "laptop");
+        keyword = bundle.getString("keyword", "");
+        showProducts();
+        return view;
+    }
+
+
+    private void showProducts() {
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
@@ -114,34 +86,34 @@ public class SearchCategoryFragment extends Fragment {
         String domain = getResources().getString(R.string.virtual_api);
         Request request;
 
-        switch (productCategory.toString()){
+        switch (searchCategory){
             case "laptop":
                 request = new Request.Builder()
-                        .url(domain + "api/Laptops/Search/" + productName).build();
+                        .url(domain + "api/Laptops/Search/" + keyword).build();
                 break;
             case "cpu":
                 request = new Request.Builder()
-                        .url(domain + "api/CPUs/Search/" + productName).build();
+                        .url(domain + "api/CPUs/Search/" + keyword).build();
                 break;
             case "vga":
                 request = new Request.Builder()
-                        .url(domain + "api/VGAs/Search/" + productName).build();
+                        .url(domain + "api/VGAs/Search/" + keyword).build();
                 break;
             case "headphone":
                 request = new Request.Builder()
-                        .url(domain + "api/HeadPhones/Search/" + productName).build();
+                        .url(domain + "api/HeadPhones/Search/" + keyword).build();
                 break;
             case "mouse":
                 request = new Request.Builder()
-                        .url(domain + "api/Mouses/Search/" + productName).build();
+                        .url(domain + "api/Mouses/Search/" + keyword).build();
                 break;
             case "keyboard":
                 request = new Request.Builder()
-                        .url(domain + "api/Keyboards/Search/" + productName).build();
+                        .url(domain + "api/Keyboards/Search/" + keyword).build();
                 break;
             default:
                 request = new Request.Builder()
-                        .url(domain + "api/Laptops/Search").build();
+                        .url(domain + "api/Laptops/Search/").build();
         }
 
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -156,21 +128,33 @@ public class SearchCategoryFragment extends Fragment {
 
                 String json = response.body().string();
                 final List<GeneralProduct> generalProducts = jsonAdapter.fromJson(json);
+                if(generalProducts.size() == 0){
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvSearchResult.setText("No products found!");
+                        }
+                    });
 
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        rvSearchProducts.setAdapter(new GeneralProductAdapter(generalProducts, getContext(), new GeneralProductAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(GeneralProduct item) {
-                                Intent intent = new Intent(getActivity().getApplicationContext(), ProductDetailActivity.class);
-                                intent.putExtra("category", item.category);
-                                intent.putExtra("id", item.ID+"");
-                                startActivity(intent);
-                            }
-                        }));
-                    }
-                });
+                } else {
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tvSearchResult.setText("Search results: "+ generalProducts.size()+" product(s)");
+                            rvSearchProducts.setAdapter(new GeneralProductAdapter(generalProducts, getContext(), new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getActivity().getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID+"");
+                                    startActivity(intent);
+                                }
+                            }));
+                        }
+                    });
+                }
+
             }
         });
     }

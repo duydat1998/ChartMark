@@ -89,16 +89,18 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="30dp"
                 android:onClick="clickToSearch"
-                android:text="Search" />
-
-                //Search Result Based on Category
-                <fragment
-                    android:id="@+id/searchFragment"
-                    android:name="assignment.prm.chartmarkapplication.SearchCategoryFragment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                android:text="Search"
+                android:background="@color/colorPrimary"/>
 
         </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/fragment_container"
+            android:layout_marginTop="20dp">
+
+        </FrameLayout>
     </LinearLayout>
 
 

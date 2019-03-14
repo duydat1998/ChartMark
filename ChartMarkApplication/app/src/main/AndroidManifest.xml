@@ -25,7 +25,6 @@
         <activity android:name=".ProductListActivity" />
         <activity android:name=".LoveListActivity" />
         <activity android:name=".CompareActivity" />
-        <activity android:name=".SearchResultActivity" />
         <activity android:name=".ProductDetailActivity"></activity>
     </application>
 

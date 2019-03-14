@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/nav_home"
+        android:icon="@drawable/ic_menu_home"
+        android:title="Home"
+        android:textColor="@color/colorPrimaryDark"/>
+    <item
         android:id="@+id/nav_laptop"
         android:icon="@drawable/ic_menu_laptop"
         android:title="Laptop"

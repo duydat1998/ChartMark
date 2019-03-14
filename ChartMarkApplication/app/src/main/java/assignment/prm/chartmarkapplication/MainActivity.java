@@ -19,7 +19,8 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
-    private Spinner spinner;
+    private Spinner productCategory;
+    private String searchCategory;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,14 +30,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initializeSpinner(){
-        spinner = findViewById(R.id.spnCategory);
-        String[] categories = new String[]{"laptop", "headphone", "keyboard", "vga", "mouse", "cpu"};
+        productCategory = findViewById(R.id.spnCategory);
+        String[] categories = new String[]{"Laptop", "Headphone", "Keyboard", "VGA", "Mouse", "CPU"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categories);
-        spinner.setAdapter(adapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        productCategory.setAdapter(adapter);
+        productCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+                searchCategory = productCategory.getItemAtPosition(position).toString().toLowerCase();
             }
 
             @Override
@@ -58,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         String category = "laptop";
                         switch (menuItem.getItemId()){
+                            case R.id.nav_home:
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                                return true;
                             case R.id.nav_laptop:
                                 category = "laptop";
                                 break;
@@ -140,12 +145,21 @@ public class MainActivity extends AppCompatActivity {
 
     public void clickToSearch(View view) {
         EditText edtSearch = findViewById(R.id.edtSearch);
-        if(edtSearch.getText().toString().trim().isEmpty()){
+        String keyword = edtSearch.getText().toString().trim();
+        if(keyword.isEmpty()){
             Toast.makeText(this, "Item can't be empty! Please enter something", Toast.LENGTH_SHORT).show();
-        }else{
-            Toast.makeText(this, "Search Success", Toast.LENGTH_SHORT).show();
+        }else {
+            loadSearchResultFragment(searchCategory, keyword);
         }
-        //Intent intent = new Intent(this,);
 
+    }
+
+    private void loadSearchResultFragment(String searchCategory, String keyword){
+        SearchCategoryFragment fragment = new SearchCategoryFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("searchCategory", searchCategory);
+        bundle.putString("keyword", keyword);
+        fragment.setArguments(bundle);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, fragment).commit();
     }
 }

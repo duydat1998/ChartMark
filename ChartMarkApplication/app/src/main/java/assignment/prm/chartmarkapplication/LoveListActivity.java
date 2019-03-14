@@ -71,6 +71,10 @@ public class LoveListActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         String category = "laptop";
                         switch (menuItem.getItemId()){
+                            case R.id.nav_home:
+                                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                startActivity(intent);
+                                return true;
                             case R.id.nav_laptop:
                                 category = "laptop";
                                 break;
