@@ -117,7 +117,8 @@ public class ProductListActivity extends AppCompatActivity {
                             public void onItemClick(GeneralProduct item) {
                                 Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
                                 intent.putExtra("category", item.category);
-                                intent.putExtra("id", item.ID+"");
+                                intent.putExtra("id", item.ID + "");
+                                intent.putExtra("brandId", item.brandId);
                                 startActivity(intent);
                             }
                         }));

@@ -3,21 +3,30 @@ package assignment.prm.chartmarkapplication;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import assignment.prm.chartmarkapplication.Model.GeneralProduct;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 public class GlobalVariable extends Application {
     private List<GeneralProduct> compareList;
     private List<GeneralProduct> loveList;
     private String compareCategory;
+    private String brandName;
 
     private static Context appContext;
 
@@ -134,6 +143,7 @@ public class GlobalVariable extends Application {
         }
         return message;
     }
+
     public void loadLoveList(){
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
 
@@ -215,6 +225,37 @@ public class GlobalVariable extends Application {
 
     public List<GeneralProduct> getCompareList(){
         return compareList;
+    }
+
+    public String getBrandName(String id){
+        OkHttpClient okHttpClient = new OkHttpClient();
+        String domain = getResources().getString(R.string.virtual_api);
+
+        String url = domain + "api/Brands/name/"+ id;
+        Request request = new Request.Builder().url(url).build();
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        okHttpClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+                Log.e("Get data API Error: ", e.getMessage());
+                countDownLatch.countDown();
+                brandName = "";
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                brandName = response.body().string();
+                brandName = brandName.substring(1);
+                brandName = brandName.substring(0, brandName.length()-1);
+                countDownLatch.countDown();
+            }
+        });
+        try {
+            countDownLatch.await();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return brandName;
     }
 
 }

@@ -48,8 +48,8 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                 .load(generalProduct.image1)
                 .into(view.ivImageProduct);
         view.tvName.setText(generalProduct.name);
-//        view.tvBrand.setText("Brand: " + BrandAdapter.getBrandName(generalProduct.brandId, context));
-        view.tvBrand.setText("Brand: "+ generalProduct.brandId);
+        String brandName = ((GlobalVariable) context.getApplicationContext()).getBrandName(generalProduct.brandId);
+        view.tvBrand.setText("Brand: "+ brandName);
         view.tvCategory.setText(generalProduct.category);
         view.tvID.setText(generalProduct.ID + "");
         final Context context = GlobalVariable.getAppContext();
@@ -100,7 +100,7 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                 }
             }
         });
-        view.bind(generalProducts.get(i), listener);
+        view.bind(generalProduct, listener);
     }
 
     @Override

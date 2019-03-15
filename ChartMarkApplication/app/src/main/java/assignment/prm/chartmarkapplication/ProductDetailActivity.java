@@ -48,7 +48,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private TextView tvCategory, tvName, tvBrand, tvPrice;
     private ImageView image1, image2;
-    private String category, id, key;
+    private String category, id, key, brandId, brandName;
     private ImageButton btnAddLove, btnAddCompare;
     private GeneralProduct generalProduct;
     private boolean isInLoveList = false, isInCompareList = false;
@@ -68,7 +68,10 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (intent.hasExtra("id")) {
             id = intent.getStringExtra("id");
         }
-        getAPIDataProduct(category, id);
+        if (intent.hasExtra("brandId")){
+            brandId = intent.getStringExtra("brandId");
+        }
+        getAPIDataProduct(category, id, brandId);
 
         GeneralProduct tmp = new GeneralProduct(Integer.parseInt(id), category);
 
@@ -98,8 +101,9 @@ public class ProductDetailActivity extends AppCompatActivity {
         tbProductDetail = findViewById(R.id.tblProductDetail);
     }
 
-    private void getAPIDataProduct(String category, String id) {
+    private void getAPIDataProduct(String category, String id, String brandId) {
 
+        brandName = ((GlobalVariable) getApplication()).getBrandName(brandId);
         switch (category) {
             case "laptop":
                 getLaptop(id);
@@ -293,9 +297,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Laptop " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -312,9 +316,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
-
-
-
 
     private void getCPU(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -342,9 +343,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand: " + brandName);
                         tvName.setText("CPU " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -361,7 +362,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getVGA(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -390,9 +390,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand: " + brandName);
                         tvName.setText("VGA " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -409,7 +409,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getHeadphone(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -437,9 +436,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand:" + brandName);
                         tvName.setText("Headphone " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -483,9 +482,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand: "+ brandName);
                         tvName.setText("Mouse " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -502,7 +501,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void getKeyboard(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
@@ -530,9 +528,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText(item.brandId);
+                        tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Keyboard " + item.name);
-                        tvPrice.setText(item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -549,6 +547,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             }
         });
     }
+
     private void getSearchKeyboard(String key) {
 
     }
@@ -560,7 +559,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Laptop item = (Laptop) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Type", item.type);
             addTableRow("Produce year", item.year + "");
             addTableRow("Screen size", item.screenSize + " inches");
@@ -578,7 +577,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             CPU item = (CPU) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Socket", item.socket + "");
             addTableRow("TDP", item.TDP + "");
             addTableRow("Thread", item.thread + "");
@@ -590,7 +589,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Headphone item = (Headphone) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Type", item.type);
             addTableRow("Micro", item.micro);
             addTableRow("Jack", item.jack);
@@ -603,7 +602,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Mouse item = (Mouse) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Type", item.type);
             addTableRow("Wireless", item.wireless);
             addTableRow("Bluetooth", item.bluetooth);
@@ -614,7 +613,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             Keyboard item = (Keyboard) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Connection", item.connect);
             addTableRow("Bluetooth", item.bluetooth);
             addTableRow("Height", item.height + "cm");
@@ -626,7 +625,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             VGA item = (VGA) product;
             addTableRow("Category", item.category);
             addTableRow("Name", item.name);
-            addTableRow("Brand", item.brandId);
+            addTableRow("Brand", brandName);
             addTableRow("Standard memory", item.standardMemory + "GB");
             addTableRow("Max Screen Resolution", item.maxScreenResolution);
             addTableRow("Weight", item.weight + "kg");

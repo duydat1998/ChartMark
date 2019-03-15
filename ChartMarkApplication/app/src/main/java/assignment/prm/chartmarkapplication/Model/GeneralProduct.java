@@ -7,6 +7,7 @@ public class GeneralProduct {
     public String name;
     public String brandId;
     public String image1;
+    public String brandName;
 
     public GeneralProduct(){
 
@@ -18,6 +19,7 @@ public class GeneralProduct {
         this.category = category;
         this.name = null;
         this.image1 = null;
+        this.brandName = null;
     }
 
     public GeneralProduct(int ID, String category, String name, String brandId, String image1){
@@ -26,6 +28,7 @@ public class GeneralProduct {
         this.category = category;
         this.name = name;
         this.image1 = image1;
+        this.brandName = null;
     }
 
     @Override
