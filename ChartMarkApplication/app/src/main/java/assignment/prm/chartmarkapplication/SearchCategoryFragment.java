@@ -148,6 +148,7 @@ public class SearchCategoryFragment extends Fragment {
                                     Intent intent = new Intent(getActivity().getApplicationContext(), ProductDetailActivity.class);
                                     intent.putExtra("category", item.category);
                                     intent.putExtra("id", item.ID+"");
+                                    intent.putExtra("brandId", item.brandId);
                                     startActivity(intent);
                                 }
                             }));
