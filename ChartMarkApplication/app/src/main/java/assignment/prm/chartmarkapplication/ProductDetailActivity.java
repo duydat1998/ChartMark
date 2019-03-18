@@ -679,6 +679,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         row.addView(col1);
         row.addView(col2);
+
         tbProductDetail.addView(row);
     }
 

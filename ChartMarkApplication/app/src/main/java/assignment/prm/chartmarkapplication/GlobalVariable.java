@@ -70,11 +70,6 @@ public class GlobalVariable extends Application {
                     compareCategory = product.category;
 
                     return "Product is added to Compare list";
-                } else if (compareList.size() == 1 && compareCategory.equals(product.category)) {
-                    compareList.add(product);
-                    compareCategory = product.category;
-
-                    return "Product is added to Compare list";
                 } else {
                     if (compareList.size() == 2) {
                         return "Add no more than 2 products to Compare List. Add FAIL";

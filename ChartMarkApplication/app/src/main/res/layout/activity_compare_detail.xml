@@ -13,7 +13,12 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
-
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu_home"
+            android:onClick="clickToReturnHome"
+            />
         <ImageButton
             android:id="@+id/btnLoveList"
             android:layout_width="20dp"
@@ -70,7 +75,7 @@
             >
 
             <TableLayout
-                android:id="@+id/tblProductCompare1"
+                android:id="@+id/tblProductAttribute"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorTableBackground"
@@ -78,8 +83,17 @@
 
             </TableLayout>
             <TableLayout
-                android:layout_toRightOf="@id/tblProductCompare1"
+                android:id="@+id/tblProductCompare1"
+                android:layout_toRightOf="@+id/tblProductAttribute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTableBackground"
+                android:paddingVertical="5dp">
+
+            </TableLayout>
+            <TableLayout
                 android:id="@+id/tblProductCompare2"
+                android:layout_toRightOf="@id/tblProductCompare1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/colorTableBackground"

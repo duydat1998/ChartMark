@@ -154,11 +154,19 @@ public class CompareActivity extends AppCompatActivity {
     public void clickToViewCompareList(View view) {
         Intent intent = new Intent(this, CompareActivity.class);
         startActivity(intent);
+
+
     }
 
     public void clickToCompare(View view) {
-        Intent intent = new Intent(this, CompareDetailActivity.class);
-        startActivity(intent);
+        final List<GeneralProduct> compareList =((GlobalVariable) getApplication()).getCompareList();
+        if(compareList.size() != 2){
+            Toast.makeText(this, "You don't have enough item to compare", Toast.LENGTH_SHORT).show();
+        }else if(compareList.size() == 2){
+            Intent intent = new Intent(this, CompareDetailActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     public void clickToEmptyCompareList(View view) {
