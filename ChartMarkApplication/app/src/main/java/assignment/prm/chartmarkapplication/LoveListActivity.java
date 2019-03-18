@@ -44,6 +44,7 @@ public class LoveListActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(GeneralProduct item) {
                             Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                            intent.putExtra("brandId", item.brandId);
                             intent.putExtra("category", item.category);
                             intent.putExtra("id", item.ID+"");
                             startActivity(intent);
