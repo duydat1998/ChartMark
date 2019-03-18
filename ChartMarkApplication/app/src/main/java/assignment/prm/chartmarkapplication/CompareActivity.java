@@ -163,7 +163,18 @@ public class CompareActivity extends AppCompatActivity {
         if(compareList.size() != 2){
             Toast.makeText(this, "You don't have enough item to compare", Toast.LENGTH_SHORT).show();
         }else if(compareList.size() == 2){
-            Intent intent = new Intent(this, CompareDetailActivity.class);
+            Intent intent = new Intent(getApplicationContext(), CompareDetailActivity.class);
+            //Lấy item trên vị trí
+            GeneralProduct item1 = ((GlobalVariable) getApplication()).getCompareList().get(0);
+            intent.putExtra("brandId1", item1.brandId);
+            intent.putExtra("category1", item1.category);
+            intent.putExtra("id1", item1.ID+"");
+
+            GeneralProduct item2 = ((GlobalVariable) getApplication()).getCompareList().get(1);
+            intent.putExtra("brandId2", item2.brandId);
+            intent.putExtra("category2", item2.category);
+            intent.putExtra("id2", item2.ID+"");
+
             startActivity(intent);
         }
 
