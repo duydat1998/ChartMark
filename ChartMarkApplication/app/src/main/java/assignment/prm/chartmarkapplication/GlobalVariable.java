@@ -1,9 +1,11 @@
 package assignment.prm.chartmarkapplication;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,6 +30,7 @@ public class GlobalVariable extends Application {
     private String compareCategory;
     private String brandName;
 
+
     private static Context appContext;
 
     @Override
@@ -36,61 +39,68 @@ public class GlobalVariable extends Application {
         appContext = getApplicationContext();
     }
 
-    public static Context getAppContext(){
+    public static Context getAppContext() {
         return appContext;
     }
 
-    public void loadCompareList(){
+    public void loadCompareList() {
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
         String compareCategory = sharedPreferences.getString("compareCategory", null);
-        String json = sharedPreferences.getString("compareList",null);
-        if(json != null){
+        String json = sharedPreferences.getString("compareList", null);
+        if (json != null) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<GeneralProduct>>(){}.getType();
+            Type type = new TypeToken<List<GeneralProduct>>() {
+            }.getType();
             compareList = gson.fromJson(json, type);
         } else {
             compareList = new ArrayList<>();
         }
     }
 
-    public String addToCompareList(GeneralProduct product){
+    public String addToCompareList(GeneralProduct product) {
         String message = "";
-        try{
-            if(compareList == null){
+        try {
+            if (compareList == null) {
                 compareList = new ArrayList<>();
                 compareList.add(product);
                 compareCategory = product.category;
             } else {
-                if(compareList.isEmpty()){
+                if (compareList.isEmpty()) {
                     compareList.add(product);
                     compareCategory = product.category;
+
+                    return "Product is added to Compare list";
+                } else if (compareList.size() == 1 && compareCategory.equals(product.category)) {
+                    compareList.add(product);
+                    compareCategory = product.category;
+
                     return "Product is added to Compare list";
                 } else {
-                    if(compareList.size() == 2){
+                    if (compareList.size() == 2) {
                         return "Add no more than 2 products to Compare List. Add FAIL";
                     }
-                    if(compareCategory.equals(product.category)){
-                        if(checkInCompareList(product)){
+                    if (compareCategory.equals(product.category)) {
+                        if (checkInCompareList(product)) {
                             return "Product is already in compare list";
                         } else {
                             compareList.add(product);
                             message = "Product is added to Compare list";
                         }
                     } else {
-                        return "This product is not a "+compareCategory+" to be added to Compare List. Add FAIL";
+                        return "This product is not a " + compareCategory + " to be added to Compare List. Add FAIL";
                     }
                 }
             }
             saveCompareList();
             loadCompareList();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             message = "Something go wrong, please try again";
         }
         return message;
     }
 
-    public void saveCompareList(){
+    public void saveCompareList() {
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -102,32 +112,32 @@ public class GlobalVariable extends Application {
         editor.commit();
     }
 
-    public String removeFromCompareList(GeneralProduct product){
+    public String removeFromCompareList(GeneralProduct product) {
         String message;
-        try{
-            if(compareList != null){
-                if(compareList.contains(product)){
+        try {
+            if (compareList != null) {
+                if (compareList.contains(product)) {
                     compareList.remove(product);
                 }
-                if(compareList.isEmpty()){
+                if (compareList.isEmpty()) {
                     compareCategory = null;
                 }
             }
             saveCompareList();
             loadCompareList();
             message = "Product is removed from Compare list";
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             message = "Something go wrong, please try again";
         }
         return message;
     }
 
-    public String emptyCompareList(){
+    public String emptyCompareList() {
         String message;
-        try{
-            if(compareList != null){
-                if(compareList.isEmpty()){
+        try {
+            if (compareList != null) {
+                if (compareList.isEmpty()) {
                     compareCategory = null;
                 } else {
                     compareList.clear();
@@ -137,65 +147,66 @@ public class GlobalVariable extends Application {
             saveCompareList();
             loadCompareList();
             message = "Compare list is cleared";
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             message = "Something go wrong, please try again";
         }
         return message;
     }
 
-    public void loadLoveList(){
+    public void loadLoveList() {
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
 
-        String json = sharedPreferences.getString("lovelist",null);
-        if(json != null){
+        String json = sharedPreferences.getString("lovelist", null);
+        if (json != null) {
             Gson gson = new Gson();
-            Type type = new TypeToken<List<GeneralProduct>>(){}.getType();
+            Type type = new TypeToken<List<GeneralProduct>>() {
+            }.getType();
             loveList = gson.fromJson(json, type);
         } else {
             loveList = new ArrayList<>();
         }
     }
 
-    public String removeFromLoveList(GeneralProduct product){
+    public String removeFromLoveList(GeneralProduct product) {
         String message;
-        try{
-            if(loveList != null){
-                if(loveList.contains(product)){
+        try {
+            if (loveList != null) {
+                if (loveList.contains(product)) {
                     loveList.remove(product);
                 }
             }
             saveLoveList();
             loadLoveList();
             message = "Product is removed from Love list";
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             message = "Something go wrong, please try again";
         }
         return message;
     }
 
-    public String addToLoveList(GeneralProduct product){
+    public String addToLoveList(GeneralProduct product) {
         String message;
-        try{
-            if(loveList == null){
+        try {
+            if (loveList == null) {
                 loveList = new ArrayList<>();
             }
-            if(checkInLoveList(product)){
+            if (checkInLoveList(product)) {
                 return "Product is already in love list";
             }
             loveList.add(product);
             saveLoveList();
             loadLoveList();
             message = "Product is added to Love list";
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             message = "Something go wrong, please try again";
         }
         return message;
     }
 
-    public void saveLoveList(){
+    public void saveLoveList() {
         SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         Gson gson = new Gson();
@@ -205,33 +216,33 @@ public class GlobalVariable extends Application {
         editor.commit();
     }
 
-    public boolean checkInLoveList(GeneralProduct product){
-        if(loveList == null){
+    public boolean checkInLoveList(GeneralProduct product) {
+        if (loveList == null) {
             return false;
         }
         return loveList.contains(product);
     }
 
-    public boolean checkInCompareList(GeneralProduct product){
-        if(compareList == null){
+    public boolean checkInCompareList(GeneralProduct product) {
+        if (compareList == null) {
             return false;
         }
         return compareList.contains(product);
     }
 
-    public List<GeneralProduct> getLoveList(){
+    public List<GeneralProduct> getLoveList() {
         return loveList;
     }
 
-    public List<GeneralProduct> getCompareList(){
+    public List<GeneralProduct> getCompareList() {
         return compareList;
     }
 
-    public String getBrandName(String id){
+    public String getBrandName(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         String domain = getResources().getString(R.string.virtual_api);
 
-        String url = domain + "api/Brands/name/"+ id;
+        String url = domain + "api/Brands/name/" + id;
         Request request = new Request.Builder().url(url).build();
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         okHttpClient.newCall(request).enqueue(new Callback() {
@@ -242,17 +253,18 @@ public class GlobalVariable extends Application {
                 countDownLatch.countDown();
                 brandName = "";
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 brandName = response.body().string();
                 brandName = brandName.substring(1);
-                brandName = brandName.substring(0, brandName.length()-1);
+                brandName = brandName.substring(0, brandName.length() - 1);
                 countDownLatch.countDown();
             }
         });
         try {
             countDownLatch.await();
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return brandName;

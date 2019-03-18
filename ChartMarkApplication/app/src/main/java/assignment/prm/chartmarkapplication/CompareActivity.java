@@ -156,6 +156,8 @@ public class CompareActivity extends AppCompatActivity {
     }
 
     public void clickToCompare(View view) {
+        Intent intent = new Intent(this, CompareDetailActivity.class);
+        startActivity(intent);
     }
 
     public void clickToEmptyCompareList(View view) {

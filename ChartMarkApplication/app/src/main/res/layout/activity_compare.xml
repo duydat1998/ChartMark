@@ -83,17 +83,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingHorizontal="20dp">
+
             <Button
                 android:layout_width="200dp"
-                android:layout_gravity="center"
                 android:layout_height="45dp"
-                android:text="compare"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="3"
                 android:background="@color/colorPrimary"
-                android:layout_marginBottom="20dp"
                 android:onClick="clickToCompare"
-                android:layout_margin="10dp"
-                />
+                android:text="compare" />
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"

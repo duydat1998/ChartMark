@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".CompareDetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar">
+
+        <ImageButton
+            android:id="@+id/btnLoveList"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/icon_heart"
+            android:onClick="clickToViewLoveList" />
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp">
+
+        <ImageView
+            android:id="@+id/imgCompareOne"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp" />
+
+        <ImageView
+            android:id="@+id/imgCompareTwo"
+            android:layout_width="140dp"
+            android:layout_height="100dp"
+            android:layout_marginLeft="40dp"
+            android:layout_toRightOf="@+id/imgCompareOne" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Compare Item"
+        android:textSize="24dp"
+        android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="10dp"
+            android:paddingBottom="20dp"
+            >
+
+            <TableLayout
+                android:id="@+id/tblProductCompare1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTableBackground"
+                android:paddingVertical="5dp">
+
+            </TableLayout>
+            <TableLayout
+                android:layout_toRightOf="@id/tblProductCompare1"
+                android:id="@+id/tblProductCompare2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTableBackground"
+                android:paddingVertical="5dp">
+
+            </TableLayout>
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

@@ -58,6 +58,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+
         setMenu();
         initializeControl();
 
@@ -91,6 +93,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvCategory = findViewById(R.id.tv_category);
         tvName = findViewById(R.id.tv_product_name);
         tvPrice = findViewById(R.id.tv_average_price);
+
 
         image1 = findViewById(R.id.iv_product_image1);
         image2 = findViewById(R.id.iv_product_image2);
@@ -230,11 +233,13 @@ public class ProductDetailActivity extends AppCompatActivity {
             message = ((GlobalVariable) this.getApplication()).removeFromCompareList(generalProduct);
             isInCompareList = false;
             btnAddCompare.setImageResource(R.drawable.icon_add);
+
         } else {
             message = ((GlobalVariable) this.getApplication()).addToCompareList(generalProduct);
             if (!message.contains("Add FAIL") && !message.contains("wrong")) {
                 isInCompareList = true;
                 btnAddCompare.setImageResource(R.drawable.icon_added);
+
             }
         }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
@@ -299,6 +304,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Laptop " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -345,6 +353,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("CPU " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -392,6 +403,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("VGA " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -438,6 +452,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand:" + brandName);
                         tvName.setText("Headphone " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -484,6 +501,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: "+ brandName);
                         tvName.setText("Mouse " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -530,6 +550,9 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Keyboard " + item.name);
+                        //Transfer Data for compare detail using
+
+
                         tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
