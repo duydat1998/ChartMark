@@ -59,15 +59,20 @@
                 android:gravity="center"
                 android:text="Search for device you need here: " />
 
-            <Spinner
-                android:id="@+id/spnCategory"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Search by"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="30dp"/>
+            <Spinner
+                android:id="@+id/spnCategory"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="20dp"
                 android:spinnerMode="dropdown"
-
                 />
 
             <EditText
@@ -78,7 +83,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="20dp"
-                android:hint="keyword"
+                android:hint="product name. Ex: zenbook"
 
                 />
 

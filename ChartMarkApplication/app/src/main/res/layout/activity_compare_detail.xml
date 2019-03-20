@@ -18,6 +18,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_menu_home"
             android:onClick="clickToReturnHome"
+            android:background="@color/colorPrimary"
             />
         <ImageButton
             android:id="@+id/btnLoveList"
@@ -29,6 +30,18 @@
             android:layout_marginRight="20dp"
             android:background="@drawable/icon_heart"
             android:onClick="clickToViewLoveList" />
+        <ImageButton
+            android:layout_height="20dp"
+            android:layout_width="20dp"
+            android:id="@+id/btnCompareList"
+            android:background="@drawable/icon_list"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="end"
+            android:onClick="clickToViewCompareList"
+            />
+
 
     </android.support.v7.widget.Toolbar>
 
@@ -58,48 +71,49 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="Compare Item"
+        android:text="Compare Table"
         android:textSize="24dp"
         android:textStyle="bold" />
 
     <ScrollView
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="5dp">
 
-        <RelativeLayout
+            <!--<TableLayout-->
+            <!--android:id="@+id/tblProductAttribute"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorTableBackground"-->
+            <!--android:paddingVertical="5dp">-->
+            <!--</TableLayout>-->
+            <!--<TableLayout-->
+            <!--android:id="@+id/tblProductCompare1"-->
+            <!--android:layout_toRightOf="@+id/tblProductAttribute"-->
+            <!--android:layout_width="110dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorTableBackground"-->
+            <!--android:paddingVertical="5dp">-->
+
+            <!--</TableLayout>-->
+            <!--<TableLayout-->
+            <!--android:id="@+id/tblProductCompare2"-->
+            <!--android:layout_toRightOf="@id/tblProductCompare1"-->
+            <!--android:layout_width="110dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="@color/colorTableBackground"-->
+            <!--android:paddingVertical="5dp">-->
+
+            <!--</TableLayout>-->
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingHorizontal="10dp"
-            android:paddingBottom="20dp"
+            android:id="@+id/tblCompareDetail"
+            android:background="@color/colorTableBackground"
             >
+        </TableLayout>
 
-            <TableLayout
-                android:id="@+id/tblProductAttribute"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorTableBackground"
-                android:paddingVertical="5dp">
-
-            </TableLayout>
-            <TableLayout
-                android:id="@+id/tblProductCompare1"
-                android:layout_toRightOf="@+id/tblProductAttribute"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorTableBackground"
-                android:paddingVertical="5dp">
-
-            </TableLayout>
-            <TableLayout
-                android:id="@+id/tblProductCompare2"
-                android:layout_toRightOf="@id/tblProductCompare1"
-                android:layout_width="110dp"
-                android:layout_height="match_parent"
-                android:background="@color/colorTableBackground"
-                android:paddingVertical="5dp">
-
-            </TableLayout>
-        </RelativeLayout>
     </ScrollView>
+
 </LinearLayout>
