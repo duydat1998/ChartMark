@@ -571,10 +571,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void getSearchKeyboard(String key) {
-
-    }
-
 
     private void initializeProductDetailTable(Object product) {
 

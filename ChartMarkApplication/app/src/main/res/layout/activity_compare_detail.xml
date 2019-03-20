@@ -76,8 +76,8 @@
 
             <TableLayout
                 android:id="@+id/tblProductAttribute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorTableBackground"
                 android:paddingVertical="5dp">
 
@@ -85,8 +85,8 @@
             <TableLayout
                 android:id="@+id/tblProductCompare1"
                 android:layout_toRightOf="@+id/tblProductAttribute"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorTableBackground"
                 android:paddingVertical="5dp">
 
@@ -94,8 +94,8 @@
             <TableLayout
                 android:id="@+id/tblProductCompare2"
                 android:layout_toRightOf="@id/tblProductCompare1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="110dp"
+                android:layout_height="match_parent"
                 android:background="@color/colorTableBackground"
                 android:paddingVertical="5dp">
 

@@ -120,8 +120,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Laptops/" + id).build();
@@ -157,9 +155,6 @@ public class CompareDetailActivity extends AppCompatActivity {
     private void getLaptop2(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
-
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Laptops/" + id).build();
@@ -196,8 +191,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/CPUs/" + id).build();
@@ -233,9 +226,6 @@ public class CompareDetailActivity extends AppCompatActivity {
     private void getCPU2(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
-
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/CPUs/" + id).build();
@@ -271,9 +261,6 @@ public class CompareDetailActivity extends AppCompatActivity {
     private void getVGA1(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
-
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/VGAs/" + id).build();
@@ -310,9 +297,6 @@ public class CompareDetailActivity extends AppCompatActivity {
     private void getVGA2(String id) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
-
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/VGAs/" + id).build();
@@ -350,8 +334,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Headphones/" + id).build();
@@ -388,8 +370,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Headphones/" + id).build();
@@ -415,7 +395,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
-                        initializeProductDetailTable1(item);
+                        initializeProductDetailTable2(item);
                     }
                 });
             }
@@ -464,8 +444,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Mouses/" + id).build();
@@ -491,7 +469,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
-                        initializeProductDetailTable1(item);
+                        initializeProductDetailTable2(item);
                     }
                 });
             }
@@ -502,8 +480,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Keyboards/" + id).build();
@@ -540,8 +516,6 @@ public class CompareDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Keyboards/" + id).build();
@@ -567,7 +541,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
-                        initializeProductDetailTable1(item);
+                        initializeProductDetailTable2(item);
                     }
                 });
             }
