@@ -43,11 +43,6 @@ public class CompareDetailActivity extends AppCompatActivity {
     private TableLayout tbProductDetail, tbProductDetail2, tblProductAttribute;
 
     private void initializeControl() {
-        tvBrand = findViewById(R.id.tv_brand);
-        tvCategory = findViewById(R.id.tv_category);
-        tvName = findViewById(R.id.tv_product_name);
-        tvPrice = findViewById(R.id.tv_average_price);
-
 
         image1 = findViewById(R.id.imgCompareOne);
         image2 = findViewById(R.id.imgCompareTwo);
@@ -85,11 +80,12 @@ public class CompareDetailActivity extends AppCompatActivity {
             brandId2 = intent.getStringExtra("brandId2");
         }
 
-        checkCategory1(category1, category2, id1, id2, brandId1, brandId2);
+        checkCategory1(category1, id1, id2, brandId1, brandId2);
     }
 
-    private void checkCategory1(String category1, String category2, String id1, String id2, String brandId1, String brandId2) {
+    private void checkCategory1(String category1, String id1, String id2, String brandId1, String brandId2) {
         brandName1 = ((GlobalVariable) getApplication()).getBrandName(brandId1);
+        brandName2 = ((GlobalVariable) getApplication()).getBrandName(brandId2);
         switch (category1) {
             case "laptop":
                 getLaptop1(id1);
@@ -145,13 +141,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName1);
-                        tvName.setText("Laptop " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -189,13 +179,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName2);
-                        tvName.setText("Laptop " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {
@@ -233,13 +217,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName1);
-                        tvName.setText("CPU " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -277,13 +255,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName2);
-                        tvName.setText("CPU " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {
@@ -322,13 +294,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName1);
-                        tvName.setText("VGA " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -367,13 +333,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName2);
-                        tvName.setText("VGA " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {
@@ -411,13 +371,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand:" + brandName1);
-                        tvName.setText("Headphone " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -455,13 +409,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand:" + brandName2);
-                        tvName.setText("Headphone " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {
@@ -499,13 +447,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName1);
-                        tvName.setText("Mouse " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -543,13 +485,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName2);
-                        tvName.setText("Mouse " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {
@@ -587,13 +523,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName1);
-                        tvName.setText("Keyboard " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -631,13 +561,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        tvCategory.setText(item.category.toUpperCase());
-                        tvBrand.setText("Brand: " + brandName2);
-                        tvName.setText("Keyboard " + item.name);
-                        //Transfer Data for compare detail using
 
-
-                        tvPrice.setText("Average Price: " + item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
                         } else {

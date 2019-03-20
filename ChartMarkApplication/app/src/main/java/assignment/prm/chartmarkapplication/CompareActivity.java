@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Spinner;
@@ -174,8 +175,12 @@ public class CompareActivity extends AppCompatActivity {
             intent.putExtra("brandId2", item2.brandId);
             intent.putExtra("category2", item2.category);
             intent.putExtra("id2", item2.ID+"");
+            try{
+                startActivity(intent);
+            }catch (Exception e){
+                Log.e("Error: ", e.getMessage());
+            }
 
-            startActivity(intent);
         }
 
     }

@@ -43,7 +43,7 @@
             android:id="@+id/imgCompareOne"
             android:layout_width="140dp"
             android:layout_height="100dp"
-            android:layout_marginLeft="40dp" />
+            android:layout_marginLeft="20dp" />
 
         <ImageView
             android:id="@+id/imgCompareTwo"
