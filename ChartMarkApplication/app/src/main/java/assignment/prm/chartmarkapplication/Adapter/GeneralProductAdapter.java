@@ -68,7 +68,7 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                     String message = ((GlobalVariable) context.getApplicationContext()).removeFromCompareList(generalProduct);
                     if(!message.contains("wrong")){
                         ImageButton ib = (ImageButton) v;
-                        ib.setImageResource(R.drawable.icon_add); }
+                        ib.setImageResource(0); }
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 } else {
                     String message = ((GlobalVariable) context.getApplicationContext()).addToCompareList(generalProduct);
@@ -87,7 +87,7 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                     String message = ((GlobalVariable) context.getApplicationContext()).removeFromLoveList(generalProduct);
                     if(!message.contains("wrong")){
                         ImageButton ib = (ImageButton) v;
-                        ib.setImageResource(R.drawable.icon_hollow_heart);
+                        ib.setImageResource(0);
                     }
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 } else {

@@ -232,7 +232,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (isInCompareList) {
             message = ((GlobalVariable) this.getApplication()).removeFromCompareList(generalProduct);
             isInCompareList = false;
-            btnAddCompare.setImageResource(R.drawable.icon_add);
+            btnAddCompare.setImageResource(0);
 
         } else {
             message = ((GlobalVariable) this.getApplication()).addToCompareList(generalProduct);
@@ -250,7 +250,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         if (isInLoveList) {
             message = ((GlobalVariable) this.getApplication()).removeFromLoveList(generalProduct);
             isInLoveList = false;
-            btnAddLove.setImageResource(R.drawable.icon_hollow_heart);
+            btnAddLove.setImageResource(0);
         } else {
             message = ((GlobalVariable) this.getApplication()).addToLoveList(generalProduct);
             if (!message.contains("wrong")) {

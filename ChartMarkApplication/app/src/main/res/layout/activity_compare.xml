@@ -32,6 +32,7 @@
                 android:layout_gravity="end"
                 android:onClick="clickToViewLoveList"
                 />
+
             <ImageButton
                 android:layout_height="20dp"
                 android:layout_width="20dp"
@@ -61,13 +62,14 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtCompareList"/>
+                android:id="@+id/txtCompareList"
+                android:layout_marginVertical="10dp"/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvCompareProducts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginVertical="10dp"
                 />
         </LinearLayout>
 
