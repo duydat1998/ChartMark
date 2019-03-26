@@ -2,6 +2,7 @@ package assignment.prm.chartmarkapplication;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -148,6 +149,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Operating System", lap1.OS, lap2.OS);
                 addTableRow("Battery", lap1.battery, lap2.battery);
                 addTableRow("Average price", lap1.averagePrice + " VND", lap2.averagePrice + " VND");
+                addTableFooter(lap1.category, lap1.name, lap2.name);
                 break;
             case "cpu":
 
@@ -163,7 +165,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Clock Speed", cpu1.clockSpeed+"", cpu2.clockSpeed+"");
                 addTableRow("Weight", cpu1.weight + "kg", cpu2.weight + "kg");
                 addTableRow("Average price", cpu1.averagePrice + " VND", cpu2.averagePrice + " VND");
-
+                addTableFooter(cpu1.category, cpu1.name, cpu2.name);
                 break;
             case "vga":
                 VGA vga1 = (VGA) obj1;
@@ -177,6 +179,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Weight", vga1.weight + " kg", vga2.weight + " kg");
                 addTableRow("Size", vga1.size, vga2.size);
                 addTableRow("Average price", vga1.averagePrice + " VND", vga2.averagePrice+ " VND");
+                addTableFooter(vga1.category, vga1.name, vga2.name);
                 break;
             case "headphone":
                 Headphone hp1 = (Headphone) obj1;
@@ -192,6 +195,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Bluetooth", hp1.bluetooth, hp2.bluetooth);
                 addTableRow("Length", hp1.length + " m", hp2.length + " m");
                 addTableRow("Average price", hp1.averagePrice+" VND", hp2.averagePrice + " VND");
+                addTableFooter(hp1.category, hp1.name, hp2.name);
                 break;
             case "mouse":
                 Mouse mouse1 = (Mouse) obj1;
@@ -205,6 +209,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Bluetooth", mouse1.bluetooth, mouse2.bluetooth);
                 addTableRow("Weight", mouse1.weight + " g", mouse2.weight + " g");
                 addTableRow("Average price", mouse1.averagePrice+" VND", mouse2.averagePrice + " VND");
+                addTableFooter(mouse1.category, mouse1.name, mouse2.name);
                 break;
             case "keyboard":
                 Keyboard keyb1 = (Keyboard) obj1;
@@ -219,6 +224,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Length", keyb1.length + "cm", keyb2.length+"cm");
                 addTableRow("Width", keyb1.width+"cm", keyb2.width+"cm");
                 addTableRow("Average price", keyb1.averagePrice+" VND", keyb2.averagePrice + " VND");
+                addTableFooter(keyb1.category, keyb1.name, keyb2.name);
                 break;
         }
     }
@@ -256,6 +262,75 @@ public class CompareDetailActivity extends AppCompatActivity {
         tblCompareDetail.addView(row);
     }
 
+    private void addTableFooter(final String category, final String name1, final String name2){
+        TextView col1 = new TextView(this);
+        ImageButton col2 = new ImageButton(this);
+        ImageButton col3 = new ImageButton(this);
+        TableRow row = new TableRow(this);
+
+        TableRow.LayoutParams lp = new TableRow.LayoutParams();
+        lp.weight = 1; //column weight
+        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.2f);
+        col1.setLayoutParams(lp);
+        col1.setPadding(10, 1, 10, 1);
+
+        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.4f);
+        lp.setMargins(10,10,10,10);
+        col2.setLayoutParams(lp);
+        col2.setPadding(10, 10, 10, 10);
+
+        col3.setLayoutParams(lp);
+        col3.setPadding(10, 10, 10, 10);
+
+        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
+
+        col1.setText("");
+
+        col2.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        col3.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+
+        col2.setImageResource(R.drawable.search);
+        col3.setImageResource(R.drawable.search);
+        col2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchURI = getResources().getString(R.string.google_search);
+                String[] s = name1.split(" ");
+                searchURI += category+"+";
+                for (int i = 0; i < s.length; i++) {
+                    searchURI += s[i];
+                    if (i != s.length - 1) {
+                        searchURI += "+";
+                    }
+                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchURI));
+                startActivity(Intent.createChooser(intent, "Open using:"));
+            }
+        });
+
+        col3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String searchURI = getResources().getString(R.string.google_search);
+                String[] s = name2.split(" ");
+                searchURI += category+"+";
+                for (int i = 0; i < s.length; i++) {
+                    searchURI += s[i];
+                    if (i != s.length - 1) {
+                        searchURI += "+";
+                    }
+                }
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(searchURI));
+                startActivity(Intent.createChooser(intent, "Open using:"));
+            }
+        });
+
+        row.addView(col1);
+        row.addView(col2);
+        row.addView(col3);
+
+        tblCompareDetail.addView(row);
+    }
     public void clickToViewLoveList(View view) {
         Intent intent = new Intent(this, LoveListActivity.class);
         startActivity(intent);
@@ -600,770 +675,5 @@ public class CompareDetailActivity extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
-
-//    private void initializeProductAttribute(Object product) {
-//        if (product instanceof Laptop) {
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Type");
-//            addTableRow("Produce year");
-//            addTableRow("Screen size");
-//            addTableRow("Weight");
-//            addTableRow("Chip");
-//            addTableRow("RAM");
-//            addTableRow("ROM");
-//            addTableRow("Webcam");
-//            addTableRow("Wifi");
-//            addTableRow("Operating System");
-//            addTableRow("Battery");
-//            addTableRow("Average price");
-//        }
-//        if (product instanceof CPU) {
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Socket");
-//            addTableRow("TDP");
-//            addTableRow("Thread");
-//            addTableRow("Clock Speed");
-//            addTableRow("Weight");
-//            addTableRow("Average price");
-//        }
-//        if (product instanceof Headphone) {
-//            Headphone item = (Headphone) product;
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Type");
-//            addTableRow("Micro");
-//            addTableRow("Jack");
-//            addTableRow("Frequency range");
-//            addTableRow("Bluetooth");
-//            addTableRow("Length");
-//            addTableRow("Average price");
-//        }
-//        if (product instanceof Mouse) {
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Type");
-//            addTableRow("Wireless");
-//            addTableRow("Bluetooth");
-//            addTableRow("Weight");
-//            addTableRow("Average price");
-//        }
-//        if (product instanceof Keyboard) {
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Connection");
-//            addTableRow("Bluetooth");
-//            addTableRow("Height");
-//            addTableRow("Length");
-//            addTableRow("Width");
-//            addTableRow("Average price");
-//        }
-//        if (product instanceof VGA) {
-//            addTableRow("Category");
-//            addTableRow("Name");
-//            addTableRow("Brand");
-//            addTableRow("Standard memory");
-//            addTableRow("Max Screen Resolution");
-//            addTableRow("Weight");
-//            addTableRow("Size");
-//            addTableRow("Average price");
-//        }
-//    }
-
-//    private void initializeProductDetailTable1(Object product) {
-//
-//        if (product instanceof Laptop) {
-//            Laptop item = (Laptop) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.type);
-//            addTableProductDetail1(item.year + "");
-//            addTableProductDetail1(item.screenSize + " inches");
-//            addTableProductDetail1(item.weight + " kg");
-//            addTableProductDetail1(item.chip);
-//            addTableProductDetail1(item.ram);
-//            addTableProductDetail1(item.rom);
-//            addTableProductDetail1(item.webcam);
-//            addTableProductDetail1(item.wifi);
-//            addTableProductDetail1(item.OS);
-//            addTableProductDetail1(item.battery);
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//        if (product instanceof CPU) {
-//            CPU item = (CPU) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.socket + "");
-//            addTableProductDetail1(item.TDP + "");
-//            addTableProductDetail1(item.thread + "");
-//            addTableProductDetail1(item.clockSpeed + "");
-//            addTableProductDetail1(item.weight + "");
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Headphone) {
-//            Headphone item = (Headphone) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.type);
-//            addTableProductDetail1(item.micro);
-//            addTableProductDetail1(item.jack);
-//            addTableProductDetail1(item.frequencyRange);
-//            addTableProductDetail1(item.bluetooth);
-//            addTableProductDetail1(item.length + "m");
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Mouse) {
-//            Mouse item = (Mouse) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.type);
-//            addTableProductDetail1(item.wireless);
-//            addTableProductDetail1(item.bluetooth);
-//            addTableProductDetail1(item.weight + "kg");
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Keyboard) {
-//            Keyboard item = (Keyboard) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.connect);
-//            addTableProductDetail1(item.bluetooth);
-//            addTableProductDetail1(item.height + "cm");
-//            addTableProductDetail1(item.length + " cm");
-//            addTableProductDetail1(item.width + " cm");
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//        if (product instanceof VGA) {
-//            VGA item = (VGA) product;
-//            addTableProductDetail1(item.category);
-//            addTableProductDetail1(item.name);
-//            addTableProductDetail1(brandName1);
-//            addTableProductDetail1(item.standardMemory + "GB");
-//            addTableProductDetail1(item.maxScreenResolution);
-//            addTableProductDetail1(item.weight + "kg");
-//            addTableProductDetail1(item.size);
-//            addTableProductDetail1(item.averagePrice + " VND");
-//        }
-//    }
-//    private void initializeProductDetailTable2(Object product) {
-//
-//        if (product instanceof Laptop) {
-//            Laptop item = (Laptop) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.type);
-//            addTableProductDetail2(item.year + "");
-//            addTableProductDetail2(item.screenSize + " inches");
-//            addTableProductDetail2(item.weight + " kg");
-//            addTableProductDetail2(item.chip);
-//            addTableProductDetail2(item.ram);
-//            addTableProductDetail2(item.rom);
-//            addTableProductDetail2(item.webcam);
-//            addTableProductDetail2(item.wifi);
-//            addTableProductDetail2(item.OS);
-//            addTableProductDetail2(item.battery);
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//        if (product instanceof CPU) {
-//            CPU item = (CPU) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.socket + "");
-//            addTableProductDetail2(item.TDP + "");
-//            addTableProductDetail2(item.thread + "");
-//            addTableProductDetail2(item.clockSpeed + "");
-//            addTableProductDetail2(item.weight + "");
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Headphone) {
-//            Headphone item = (Headphone) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.type);
-//            addTableProductDetail2(item.micro);
-//            addTableProductDetail2(item.jack);
-//            addTableProductDetail2(item.frequencyRange);
-//            addTableProductDetail2(item.bluetooth);
-//            addTableProductDetail2(item.length + "m");
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Mouse) {
-//            Mouse item = (Mouse) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.type);
-//            addTableProductDetail2(item.wireless);
-//            addTableProductDetail2(item.bluetooth);
-//            addTableProductDetail2(item.weight + "kg");
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//        if (product instanceof Keyboard) {
-//            Keyboard item = (Keyboard) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.connect);
-//            addTableProductDetail2(item.bluetooth);
-//            addTableProductDetail2(item.height + "cm");
-//            addTableProductDetail2(item.length + " cm");
-//            addTableProductDetail2(item.width + " cm");
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//        if (product instanceof VGA) {
-//            VGA item = (VGA) product;
-//            addTableProductDetail2(item.category);
-//            addTableProductDetail2(item.name);
-//            addTableProductDetail2(brandName2);
-//            addTableProductDetail2(item.standardMemory + "GB");
-//            addTableProductDetail2(item.maxScreenResolution);
-//            addTableProductDetail2(item.weight + "kg");
-//            addTableProductDetail2(item.size);
-//            addTableProductDetail2(item.averagePrice + " VND");
-//        }
-//    }
-
-//    private void addTableRow(String key) {
-//        TextView col1 = new TextView(this);
-//        TableRow row = new TableRow(this);
-//
-//        TableRow.LayoutParams lp = new TableRow.LayoutParams();
-//        lp.weight = 1; //column weight
-//        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.2f);
-//        col1.setLayoutParams(lp);
-//        col1.setPadding(10, 1, 10, 1);
-//
-//
-//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-//
-//        col1.setText(key);
-//
-//        row.addView(col1);
-//        tblProductAttribute.addView(row);
-//    }
-
-//    private void addTableProductDetail1(String value) {
-//        TextView col2 = new TextView(this);
-//        TableRow row = new TableRow(this);
-//
-//        TableRow.LayoutParams lp = new TableRow.LayoutParams();
-//        lp.weight = 1; //column weight
-//
-//        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.4f);
-//        col2.setLayoutParams(lp);
-//        col2.setPadding(10, 1, 10, 1);
-//
-//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-//
-//        col2.setText(value);
-//
-//        row.addView(col2);
-//
-//        //Gia dinh
-//        tbProductDetail.addView(row);
-//    }
-//    private void addTableProductDetail2(String value) {
-//        TextView col2 = new TextView(this);
-//        TableRow row = new TableRow(this);
-//
-//        TableRow.LayoutParams lp = new TableRow.LayoutParams();
-//        lp.weight = 1; //column weight
-//
-//        lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 04f);
-//        col2.setLayoutParams(lp);
-//        col2.setPadding(10, 1, 10, 1);
-//
-//        row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-//
-//        col2.setText(value);
-//
-//        row.addView(col2);
-//
-//        //Gia dinh
-//        tbProductDetail2.addView(row);
-//    }
-
-
-    //    private void checkCategory1(String category1, String id1, String id2, String brandId1, String brandId2) {
-//        brandName1 = ((GlobalVariable) getApplication()).getBrandName(brandId1);
-//        brandName2 = ((GlobalVariable) getApplication()).getBrandName(brandId2);
-//        switch (category1) {
-//            case "laptop":
-//                getLaptop1(id1);
-//                getLaptop2(id2);
-//                break;
-//            case "cpu":
-//                getCPU1(id1);
-//                getCPU2(id2);
-//                break;
-//            case "vga":
-//                getVGA1(id1);
-//                getVGA2(id2);
-//                break;
-//            case "headphone":
-//                getHeadphone1(id1);
-//                getHeadphone2(id2);
-//                break;
-//            case "mouse":
-//                getMouse1(id1);
-//                getMouse2(id2);
-//                break;
-//            case "keyboard":
-//                getKeyboard1(id1);
-//                getKeyboard2(id2);
-//                break;
-//        }
-//    }
-
-    //Get data from specific item in compare list
-//    private void getLaptop1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Laptops/" + id).build();
-//        Type productType = Types.newParameterizedType(Laptop.class);
-//        final JsonAdapter<Laptop> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Laptop item1 = jsonAdapter.fromJson(json);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if ( item1.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item1.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getLaptop2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Laptops/" + id).build();
-//        Type productType = Types.newParameterizedType(Laptop.class);
-//        final JsonAdapter<Laptop> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Laptop item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getCPU1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/CPUs/" + id).build();
-//        Type productType = Types.newParameterizedType(CPU.class);
-//        final JsonAdapter<CPU> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final CPU item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductAttribute(item);
-//                        initializeProductDetailTable1(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    private void getCPU2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/CPUs/" + id).build();
-//        Type productType = Types.newParameterizedType(CPU.class);
-//        final JsonAdapter<CPU> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final CPU item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getVGA1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/VGAs/" + id).build();
-//        Type productType = Types.newParameterizedType(VGA.class);
-//        final JsonAdapter<VGA> jsonAdapter = moshi.adapter(productType);
-//
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final VGA item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductAttribute(item);
-//                        initializeProductDetailTable1(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    private void getVGA2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/VGAs/" + id).build();
-//        Type productType = Types.newParameterizedType(VGA.class);
-//        final JsonAdapter<VGA> jsonAdapter = moshi.adapter(productType);
-//
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final VGA item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getHeadphone1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Headphones/" + id).build();
-//        Type productType = Types.newParameterizedType(Headphone.class);
-//        final JsonAdapter<Headphone> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Headphone item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductAttribute(item);
-//                        initializeProductDetailTable1(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    private void getHeadphone2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Headphones/" + id).build();
-//        Type productType = Types.newParameterizedType(Headphone.class);
-//        final JsonAdapter<Headphone> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Headphone item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getMouse1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-////        String domain = getResources().getString(R.string.home_api);
-////        String domain = getResources().getString(R.string.school_api);
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Mouses/" + id).build();
-//        Type productType = Types.newParameterizedType(Mouse.class);
-//        final JsonAdapter<Mouse> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Mouse item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductAttribute(item);
-//                        initializeProductDetailTable1(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    private void getMouse2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Mouses/" + id).build();
-//        Type productType = Types.newParameterizedType(Mouse.class);
-//        final JsonAdapter<Mouse> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Mouse item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//
-//    private void getKeyboard1(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Keyboards/" + id).build();
-//        Type productType = Types.newParameterizedType(Keyboard.class);
-//        final JsonAdapter<Keyboard> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Keyboard item = jsonAdapter.fromJson(json);
-//                generalProduct = new GeneralProduct(item.ID, item.category, item.name, item.brandId, item.image1);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image1);
-//                        } else {
-//                            image1.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductAttribute(item);
-//                        initializeProductDetailTable1(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-//    private void getKeyboard2(String id) {
-//        OkHttpClient okHttpClient = new OkHttpClient();
-//        Moshi moshi = new Moshi.Builder().build();
-//
-//        String domain = getResources().getString(R.string.virtual_api);
-//        Request request = new Request.Builder()
-//                .url(domain + "api/Keyboards/" + id).build();
-//        Type productType = Types.newParameterizedType(Keyboard.class);
-//        final JsonAdapter<Keyboard> jsonAdapter = moshi.adapter(productType);
-//        okHttpClient.newCall(request).enqueue(new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                e.printStackTrace();
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String json = response.body().string();
-//                final Keyboard item = jsonAdapter.fromJson(json);
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//
-//                        if (item.image1 != null) {
-//                            Picasso.with(CompareDetailActivity.this).load(item.image1).into(image2);
-//                        } else {
-//                            image2.setVisibility(View.INVISIBLE);
-//                        }
-//                        initializeProductDetailTable2(item);
-//                    }
-//                });
-//            }
-//        });
-//    }
-
-
-
-
-
-//
-
 
 }

@@ -81,8 +81,6 @@ public class SearchCategoryFragment extends Fragment {
         Type productType = Types.newParameterizedType(List.class, GeneralProduct.class);
         final JsonAdapter<List<GeneralProduct>> jsonAdapter = moshi.adapter(productType);
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request;
 

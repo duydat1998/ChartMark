@@ -142,6 +142,10 @@
                     android:paddingVertical="15dp">
 
                 </TableLayout>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:id="@+id/iv_product_image3"/>
             </LinearLayout>
         </ScrollView>
 

@@ -1,6 +1,7 @@
 package assignment.prm.chartmarkapplication;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -47,8 +48,8 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private TextView tvCategory, tvName, tvBrand, tvPrice;
-    private ImageView image1, image2;
-    private String category, id, key, brandId, brandName;
+    private ImageView image1, image2, image3;
+    private String category, id, brandId, brandName;
     private ImageButton btnAddLove, btnAddCompare;
     private GeneralProduct generalProduct;
     private boolean isInLoveList = false, isInCompareList = false;
@@ -97,6 +98,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         image1 = findViewById(R.id.iv_product_image1);
         image2 = findViewById(R.id.iv_product_image2);
+        image3 = findViewById(R.id.iv_product_image3);
 
         btnAddLove = findViewById(R.id.btn_add_love);
         btnAddCompare = findViewById(R.id.btn_add_compare);
@@ -280,8 +282,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Laptops/" + id).build();
@@ -304,9 +304,6 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Laptop " + item.name);
-                        //Transfer Data for compare detail using
-
-
                         tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
@@ -317,6 +314,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                             Picasso.with(ProductDetailActivity.this).load(item.image2).into(image2);
                         } else {
                             image2.setVisibility(View.INVISIBLE);
+                        }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
                     }
@@ -329,8 +331,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/CPUs/" + id).build();
@@ -367,6 +367,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
+                        }
                         initializeProductDetailTable(item);
                     }
                 });
@@ -378,8 +383,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/VGAs/" + id).build();
@@ -417,6 +420,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
+                        }
                         initializeProductDetailTable(item);
                     }
                 });
@@ -428,8 +436,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Headphones/" + id).build();
@@ -466,6 +472,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
+                        }
                         initializeProductDetailTable(item);
                     }
                 });
@@ -477,8 +488,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Mouses/" + id).build();
@@ -515,6 +524,11 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
+                        }
                         initializeProductDetailTable(item);
                     }
                 });
@@ -526,8 +540,6 @@ public class ProductDetailActivity extends AppCompatActivity {
         OkHttpClient okHttpClient = new OkHttpClient();
         Moshi moshi = new Moshi.Builder().build();
 
-//        String domain = getResources().getString(R.string.home_api);
-//        String domain = getResources().getString(R.string.school_api);
         String domain = getResources().getString(R.string.virtual_api);
         Request request = new Request.Builder()
                 .url(domain + "api/Keyboards/" + id).build();
@@ -564,13 +576,17 @@ public class ProductDetailActivity extends AppCompatActivity {
                         } else {
                             image2.setVisibility(View.INVISIBLE);
                         }
+                        if (item.image3 != null) {
+                            Picasso.with(ProductDetailActivity.this).load(item.image3).into(image3);
+                        } else {
+                            image3.setVisibility(View.INVISIBLE);
+                        }
                         initializeProductDetailTable(item);
                     }
                 });
             }
         });
     }
-
 
     private void initializeProductDetailTable(Object product) {
 
@@ -662,15 +678,16 @@ public class ProductDetailActivity extends AppCompatActivity {
         lp.weight = 1; //column weight
         lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.4f);
         col1.setLayoutParams(lp);
-        col1.setPadding(10, 1, 10, 1);
+        col1.setPadding(10, 3, 10, 3);
 
         lp = new TableRow.LayoutParams(0, TableRow.LayoutParams.MATCH_PARENT, 0.6f);
         col2.setLayoutParams(lp);
-        col2.setPadding(10, 1, 10, 1);
+        col2.setPadding(10, 3, 10, 3);
 
         row.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
 
         col1.setText(key);
+        col1.setTypeface(col1.getTypeface(), Typeface.BOLD_ITALIC);
         col2.setText(value);
 
         row.addView(col1);
