@@ -10,7 +10,7 @@ public class VGA {
     public String maxScreenResolution ;
     public double weight ;
     public String size ;
-    public double averagePrice ;
+    public int averagePrice ;
     public String image1 ;
     public String image2 ;
     public String image3 ;

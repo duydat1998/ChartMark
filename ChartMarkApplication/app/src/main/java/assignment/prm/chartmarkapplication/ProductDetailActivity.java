@@ -9,6 +9,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +31,11 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.security.Key;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
+import assignment.prm.chartmarkapplication.Adapter.GeneralProductAdapter;
 import assignment.prm.chartmarkapplication.Model.CPU;
 import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 import assignment.prm.chartmarkapplication.Model.Headphone;
@@ -54,6 +59,8 @@ public class ProductDetailActivity extends AppCompatActivity {
     private GeneralProduct generalProduct;
     private boolean isInLoveList = false, isInCompareList = false;
     private TableLayout tbProductDetail;
+    private RecyclerView rvHistoryList;
+    private TextView tvHistoryList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +94,8 @@ public class ProductDetailActivity extends AppCompatActivity {
             btnAddCompare.setImageResource(R.drawable.icon_added);
             isInCompareList = true;
         }
+
+
     }
 
     private void initializeControl() {
@@ -95,6 +104,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         tvName = findViewById(R.id.tv_product_name);
         tvPrice = findViewById(R.id.tv_average_price);
 
+        tvHistoryList = findViewById(R.id.tvHistoryList);
 
         image1 = findViewById(R.id.iv_product_image1);
         image2 = findViewById(R.id.iv_product_image2);
@@ -304,7 +314,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         tvCategory.setText(item.category.toUpperCase());
                         tvBrand.setText("Brand: " + brandName);
                         tvName.setText("Laptop " + item.name);
-                        tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+ toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -321,6 +331,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() > 0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -356,7 +385,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         //Transfer Data for compare detail using
 
 
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price:" + toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -373,6 +402,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() >0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -409,7 +457,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         //Transfer Data for compare detail using
 
 
-                        tvPrice.setText("Average Price: "+ item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+ toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -426,6 +474,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() >0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -461,7 +528,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         //Transfer Data for compare detail using
 
 
-                        tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -478,6 +545,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() >0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -513,7 +599,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         //Transfer Data for compare detail using
 
 
-                        tvPrice.setText("Average Price:" + item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price:" + toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -530,6 +616,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() >0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -565,7 +670,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                         //Transfer Data for compare detail using
 
 
-                        tvPrice.setText("Average Price: "+item.averagePrice + "VNĐ");
+                        tvPrice.setText("Average Price: "+toVNDCurrencyFormat(item.averagePrice+"") + " VNĐ");
                         if (item.image1 != null) {
                             Picasso.with(ProductDetailActivity.this).load(item.image1).into(image1);
                         } else {
@@ -582,6 +687,25 @@ public class ProductDetailActivity extends AppCompatActivity {
                             image3.setVisibility(View.INVISIBLE);
                         }
                         initializeProductDetailTable(item);
+                        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+                        if(tmpHistoryList.size() >0){
+                            rvHistoryList = findViewById(R.id.rvHistoryList);
+                            rvHistoryList.setLayoutManager(new GridLayoutManager(ProductDetailActivity.this, 2));
+                            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, ProductDetailActivity.this, new GeneralProductAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(GeneralProduct item) {
+                                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                                    intent.putExtra("category", item.category);
+                                    intent.putExtra("id", item.ID + "");
+                                    intent.putExtra("brandId", item.brandId);
+                                    startActivity(intent);
+                                }
+                            }));
+                        } else {
+                            tvHistoryList.setVisibility(View.INVISIBLE);
+                        }
+
+                        ((GlobalVariable) getApplication()).addToHistoryList(generalProduct);
                     }
                 });
             }
@@ -606,7 +730,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Wifi", item.wifi);
             addTableRow("Operating System", item.OS);
             addTableRow("Battery", item.battery);
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
         if (product instanceof CPU) {
             CPU item = (CPU) product;
@@ -618,7 +742,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Thread", item.thread + "");
             addTableRow("Clock Speed", item.clockSpeed + "");
             addTableRow("Weight", item.weight + "");
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
         if (product instanceof Headphone) {
             Headphone item = (Headphone) product;
@@ -631,7 +755,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Frequency range", item.frequencyRange);
             addTableRow("Bluetooth", item.bluetooth);
             addTableRow("Length", item.length + "m");
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
         if (product instanceof Mouse) {
             Mouse item = (Mouse) product;
@@ -642,7 +766,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Wireless", item.wireless);
             addTableRow("Bluetooth", item.bluetooth);
             addTableRow("Weight", item.weight + "kg");
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
         if (product instanceof Keyboard) {
             Keyboard item = (Keyboard) product;
@@ -654,7 +778,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Height", item.height + "cm");
             addTableRow("Length", item.length + " cm");
             addTableRow("Width", item.width + " cm");
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
         if (product instanceof VGA) {
             VGA item = (VGA) product;
@@ -665,7 +789,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             addTableRow("Max Screen Resolution", item.maxScreenResolution);
             addTableRow("Weight", item.weight + "kg");
             addTableRow("Size", item.size);
-            addTableRow("Average price", item.averagePrice + " VND");
+            addTableRow("Average price", toVNDCurrencyFormat(item.averagePrice+"") + " VND");
         }
     }
 
@@ -696,5 +820,18 @@ public class ProductDetailActivity extends AppCompatActivity {
         tbProductDetail.addView(row);
     }
 
+    private String toVNDCurrencyFormat(String input){
+        String output = "";
+        int length = input.length();
+        while (length > 3){
+            String tmp = input.substring(length - 3, length);
+            tmp = "." + tmp;
+            output = tmp + output;
+            input = input.substring(0, length - 3);
+            length = input.length();
+        }
+        output = input + output;
+        return output;
+    }
 
 }

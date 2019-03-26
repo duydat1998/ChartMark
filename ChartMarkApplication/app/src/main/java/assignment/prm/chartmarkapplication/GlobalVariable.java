@@ -13,7 +13,10 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
 import java.util.concurrent.CountDownLatch;
 
 import assignment.prm.chartmarkapplication.Model.GeneralProduct;
@@ -27,6 +30,7 @@ import okhttp3.Response;
 public class GlobalVariable extends Application {
     private List<GeneralProduct> compareList;
     private List<GeneralProduct> loveList;
+    private Queue<GeneralProduct> historyList;
     private String compareCategory;
     private String brandName;
     public boolean isInCompareActivity = false, isInLoveActivity = false;
@@ -226,12 +230,23 @@ public class GlobalVariable extends Application {
         return compareList.contains(product);
     }
 
+    public boolean checkInHistoryList(GeneralProduct product) {
+        if (historyList == null) {
+            return false;
+        }
+        return historyList.contains(product);
+    }
+
     public List<GeneralProduct> getLoveList() {
         return loveList;
     }
 
     public List<GeneralProduct> getCompareList() {
         return compareList;
+    }
+
+    public Queue<GeneralProduct> getHistoryList() {
+        return historyList;
     }
 
     public String getBrandName(String id) {
@@ -253,8 +268,10 @@ public class GlobalVariable extends Application {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 brandName = response.body().string();
-                brandName = brandName.substring(1);
-                brandName = brandName.substring(0, brandName.length() - 1);
+                if(!brandName.isEmpty()){
+                    brandName = brandName.substring(1);
+                    brandName = brandName.substring(0, brandName.length() - 1);
+                }
                 countDownLatch.countDown();
             }
         });
@@ -264,6 +281,50 @@ public class GlobalVariable extends Application {
             e.printStackTrace();
         }
         return brandName;
+    }
+
+
+    public void loadHistoryList() {
+        SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
+        String json = sharedPreferences.getString("historyList", null);
+        if (json != null) {
+            Gson gson = new Gson();
+            Type type = new TypeToken<Queue<GeneralProduct>>() {
+            }.getType();
+            historyList = gson.fromJson(json, type);
+        } else {
+            historyList = new LinkedList<>();
+        }
+    }
+
+    public void addToHistoryList(GeneralProduct product) {
+        try {
+            if (historyList == null) {
+                historyList = new LinkedList<>();
+            }
+            if(historyList.size() == 2){
+                historyList.remove();
+            }
+            if (historyList.contains(product)) {
+
+                return;
+            }
+            historyList.add(product);
+            saveHistoryList();
+            loadHistoryList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveHistoryList() {
+        SharedPreferences sharedPreferences = getSharedPreferences("assignment.prm.chartmarkapplication_preferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(historyList);
+        editor.remove("historyList");
+        editor.putString("historyList", json);
+        editor.commit();
     }
 
 }

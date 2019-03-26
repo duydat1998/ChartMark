@@ -26,6 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
         ((GlobalVariable) this.getApplication()).loadLoveList();
         ((GlobalVariable) this.getApplication()).loadCompareList();
+        ((GlobalVariable) this.getApplication()).loadHistoryList();
         moveToHomePage();
     }
 

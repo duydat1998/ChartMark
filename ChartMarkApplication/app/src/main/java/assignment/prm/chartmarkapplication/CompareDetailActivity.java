@@ -148,7 +148,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Wifi", lap1.wifi, lap2.wifi);
                 addTableRow("Operating System", lap1.OS, lap2.OS);
                 addTableRow("Battery", lap1.battery, lap2.battery);
-                addTableRow("Average price", lap1.averagePrice + " VND", lap2.averagePrice + " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(lap1.averagePrice+"") + " VND", toVNDCurrencyFormat(lap2.averagePrice+"") + " VND");
                 addTableFooter(lap1.category, lap1.name, lap2.name);
                 break;
             case "cpu":
@@ -164,7 +164,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Thread", cpu1.thread+"", cpu2.thread +"");
                 addTableRow("Clock Speed", cpu1.clockSpeed+"", cpu2.clockSpeed+"");
                 addTableRow("Weight", cpu1.weight + "kg", cpu2.weight + "kg");
-                addTableRow("Average price", cpu1.averagePrice + " VND", cpu2.averagePrice + " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(cpu1.averagePrice+"") + " VND", toVNDCurrencyFormat(cpu2.averagePrice+"") + " VND");
                 addTableFooter(cpu1.category, cpu1.name, cpu2.name);
                 break;
             case "vga":
@@ -178,7 +178,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Max Screen Resolution", vga1.maxScreenResolution, vga2.maxScreenResolution);
                 addTableRow("Weight", vga1.weight + " kg", vga2.weight + " kg");
                 addTableRow("Size", vga1.size, vga2.size);
-                addTableRow("Average price", vga1.averagePrice + " VND", vga2.averagePrice+ " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(vga1.averagePrice+"") + " VND", toVNDCurrencyFormat(vga2.averagePrice+"")+ " VND");
                 addTableFooter(vga1.category, vga1.name, vga2.name);
                 break;
             case "headphone":
@@ -194,7 +194,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Frequency range", hp1.frequencyRange, hp2.frequencyRange);
                 addTableRow("Bluetooth", hp1.bluetooth, hp2.bluetooth);
                 addTableRow("Length", hp1.length + " m", hp2.length + " m");
-                addTableRow("Average price", hp1.averagePrice+" VND", hp2.averagePrice + " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(hp1.averagePrice+"")+" VND", toVNDCurrencyFormat(hp2.averagePrice+"") + " VND");
                 addTableFooter(hp1.category, hp1.name, hp2.name);
                 break;
             case "mouse":
@@ -208,7 +208,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Wireless", mouse1.wireless, mouse2.wireless);
                 addTableRow("Bluetooth", mouse1.bluetooth, mouse2.bluetooth);
                 addTableRow("Weight", mouse1.weight + " g", mouse2.weight + " g");
-                addTableRow("Average price", mouse1.averagePrice+" VND", mouse2.averagePrice + " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(mouse1.averagePrice+"")+" VND", toVNDCurrencyFormat(mouse2.averagePrice+"") + " VND");
                 addTableFooter(mouse1.category, mouse1.name, mouse2.name);
                 break;
             case "keyboard":
@@ -223,7 +223,7 @@ public class CompareDetailActivity extends AppCompatActivity {
                 addTableRow("Height", keyb1.height +"cm", keyb2.height +"cm");
                 addTableRow("Length", keyb1.length + "cm", keyb2.length+"cm");
                 addTableRow("Width", keyb1.width+"cm", keyb2.width+"cm");
-                addTableRow("Average price", keyb1.averagePrice+" VND", keyb2.averagePrice + " VND");
+                addTableRow("Average price", toVNDCurrencyFormat(keyb1.averagePrice+"") +" VND", toVNDCurrencyFormat(keyb2.averagePrice+"") + " VND");
                 addTableFooter(keyb1.category, keyb1.name, keyb2.name);
                 break;
         }
@@ -674,6 +674,20 @@ public class CompareDetailActivity extends AppCompatActivity {
         } catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    private String toVNDCurrencyFormat(String input){
+        String output = "";
+        int length = input.length();
+        while (length > 3){
+            String tmp = input.substring(length - 3, length);
+            tmp = "." + tmp;
+            output = tmp + output;
+            input = input.substring(0, length - 3);
+            length = input.length();
+        }
+        output = input + output;
+        return output;
     }
 
 }

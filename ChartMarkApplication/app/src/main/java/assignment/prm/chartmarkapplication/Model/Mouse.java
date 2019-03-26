@@ -10,7 +10,7 @@ public class Mouse {
     public String wireless ;
     public String bluetooth ;
     public double weight ;
-    public double averagePrice ;
+    public int averagePrice ;
     public String image1 ;
     public String image2 ;
     public String image3 ;

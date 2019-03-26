@@ -7,7 +7,7 @@ public class CPU {
     public int thread;
     public double weight;
     public double clockSpeed;
-    public double averagePrice;
+    public int averagePrice;
     public String cpuID;
     public String name;
     public String brandId;
