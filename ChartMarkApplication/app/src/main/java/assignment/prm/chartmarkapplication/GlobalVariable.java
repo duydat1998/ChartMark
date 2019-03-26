@@ -29,6 +29,7 @@ public class GlobalVariable extends Application {
     private List<GeneralProduct> loveList;
     private String compareCategory;
     private String brandName;
+    public boolean isInCompareActivity = false, isInLoveActivity = false;
 
 
     private static Context appContext;
