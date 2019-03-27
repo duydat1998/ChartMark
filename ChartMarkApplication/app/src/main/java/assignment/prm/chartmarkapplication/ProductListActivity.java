@@ -1,6 +1,7 @@
 package assignment.prm.chartmarkapplication;
 
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -41,6 +42,12 @@ public class ProductListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_list);
+
+        DrawerLayout linearLayout = findViewById(R.id.drawer_layout);
+        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
+        animationDrawable.setEnterFadeDuration(2000);
+        animationDrawable.setExitFadeDuration(4000);
+        animationDrawable.start();
         setMenu();
         Intent intent = getIntent();
         category = intent.getStringExtra("category");
