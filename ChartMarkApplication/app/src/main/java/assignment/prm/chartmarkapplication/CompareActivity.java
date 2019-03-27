@@ -1,5 +1,7 @@
 package assignment.prm.chartmarkapplication;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,6 +14,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ public class CompareActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private RecyclerView rvCompareProduct;
     private TextView tvCompareList;
+    private ImageButton btnEmptyCompare;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,7 +62,33 @@ public class CompareActivity extends AppCompatActivity {
         } else {
             tvCompareList.setText("There is no product in Compare list.");
         }
-
+        btnEmptyCompare = (ImageButton) findViewById(R.id.btnEmptyCompare);
+        btnEmptyCompare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showAlertDialog();
+            }
+        });
+    }
+    public void showAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Confirm Empty Action");
+        builder.setMessage("Do you want to empty this list?");
+        builder.setCancelable(true);
+        builder.setPositiveButton("Do nothing!", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(CompareActivity.this, "Remain Activity", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Empty Compare List", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                clickToEmptyCompareList();
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
     private void setMenu() {
@@ -185,7 +216,7 @@ public class CompareActivity extends AppCompatActivity {
 
     }
 
-    public void clickToEmptyCompareList(View view) {
+    public void clickToEmptyCompareList() {
         String message = ((GlobalVariable) getApplication()).emptyCompareList();
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, CompareActivity.class);

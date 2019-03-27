@@ -2,7 +2,7 @@
     <string name="app_name">Chart Mark</string>
 
     <!--<string name="virtual_api">http://10.0.2.2/chartmark/</string>-->
-    <string name="virtual_api">http://192.168.8.101/chartmark/</string>
+    <string name="virtual_api">http://192.168.19.1/chartmark/</string>
     <!--<string name="virtual_api">http://10.82.140.150/chartmark/</string>-->
     <string name="google_search">https://www.google.com/search?q=</string>
 
