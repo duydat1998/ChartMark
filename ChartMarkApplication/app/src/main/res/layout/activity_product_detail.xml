@@ -2,14 +2,13 @@
 <android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
-    android:background="@drawable/gradient_list"
+    android:background="@color/colorWhite"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ProductDetailActivity"
@@ -111,6 +110,12 @@
                 android:scrollbars="vertical">
 
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Product Detail"
+                    android:textStyle="bold" />
+
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
@@ -135,11 +140,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="200dp"
                     android:id="@+id/iv_product_image2"/>
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textStyle="bold"
-                    android:text="Product Detail"/>
+
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -158,11 +159,14 @@
                     android:layout_gravity="center"
                     android:text="Go to Buy"
                     android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
                     android:onClick="clickToSearchOnInternet"
                     android:background="@color/colorPrimary"
                     android:layout_marginTop="10dp"
-                    android:paddingHorizontal="20dp"
-                    android:layout_marginHorizontal="100dp"
+                    android:textSize="20dp"
+                    android:paddingHorizontal="30dp"
+                    android:layout_marginHorizontal="20dp"
+                    android:drawableRight="@drawable/shopping_cart"
                     />
                 <TextView
                     android:layout_width="match_parent"

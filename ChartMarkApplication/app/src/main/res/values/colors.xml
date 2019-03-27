@@ -5,4 +5,5 @@
     <color name="colorTableBackground">#E6F3F7</color>
     <color name="colorAccent">#2196f3</color>
     <color name="colorSecondaryLight">#ffff6b</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

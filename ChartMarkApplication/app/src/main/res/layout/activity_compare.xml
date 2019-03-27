@@ -5,7 +5,7 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/gradient_list"
+    android:background="@color/colorWhite"
     android:fitsSystemWindows="true">
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -98,6 +98,8 @@
                 android:layout_marginBottom="20dp"
                 android:layout_weight="3"
                 android:background="@color/colorPrimary"
+                android:textColor="@color/colorWhite"
+                android:textSize="22dp"
                 android:onClick="clickToCompare"
                 android:text="compare" />
             <ImageButton

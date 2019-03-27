@@ -66,11 +66,13 @@ public class CompareDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compare_detail);
-        LinearLayout linearLayout = findViewById(R.id.drawer_layout);
-        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
-        animationDrawable.setEnterFadeDuration(2000);
-        animationDrawable.setExitFadeDuration(4000);
-        animationDrawable.start();
+
+//        LinearLayout linearLayout = findViewById(R.id.drawer_layout);
+//        AnimationDrawable animationDrawable = (AnimationDrawable) linearLayout.getBackground();
+//        animationDrawable.setEnterFadeDuration(2000);
+//        animationDrawable.setExitFadeDuration(4000);
+//        animationDrawable.start();
+
         initializeControl();
         Intent intent = getIntent();
         if (intent.hasExtra("category1")) {
