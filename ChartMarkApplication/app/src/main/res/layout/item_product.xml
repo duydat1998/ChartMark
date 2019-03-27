@@ -46,17 +46,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_ID"
+        android:textStyle="bold"
         android:visibility="invisible"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_category"
+        android:textStyle="bold"
         android:visibility="invisible"/>
     <TextView
         android:id="@+id/tv_product_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:textStyle="bold"
         android:text="product"/>
 
     <TextView
@@ -64,5 +67,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
+        android:textStyle="bold"
         android:text="brand"/>
 </LinearLayout>

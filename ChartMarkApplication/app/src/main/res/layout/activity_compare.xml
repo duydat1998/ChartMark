@@ -58,12 +58,15 @@
                 android:layout_height="wrap_content"
                 android:text="Compare list"
                 android:textSize="20dp"
+                android:textStyle="bold"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/txtCompareList"
-                android:layout_marginVertical="10dp"/>
+                android:layout_marginVertical="10dp"
+                android:textStyle="bold"
+                />
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/rvCompareProducts"

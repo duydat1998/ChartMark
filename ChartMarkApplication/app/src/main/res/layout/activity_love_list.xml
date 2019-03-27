@@ -59,11 +59,13 @@
                     android:layout_height="wrap_content"
                     android:text="Love list"
                     android:textSize="20dp"
+                    android:textStyle="bold"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/txtLoveList"
+                    android:textStyle="bold"
                     android:layout_marginVertical="10dp"/>
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/rvLoveProducts"

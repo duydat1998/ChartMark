@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvSearchResult"
         android:text="Search result"
+        android:textStyle="bold"
         android:layout_marginLeft="10dp"/>
     <ScrollView
         android:layout_width="match_parent"
