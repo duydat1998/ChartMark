@@ -36,6 +36,7 @@ public class CompareActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compare);
         setMenu();
+        ((GlobalVariable) getApplication()).isInCompareActivity = true;
         rvCompareProduct = findViewById(R.id.rvCompareProducts);
         tvCompareList = findViewById(R.id.txtCompareList);
         rvCompareProduct.setLayoutManager(new GridLayoutManager(this, 2));

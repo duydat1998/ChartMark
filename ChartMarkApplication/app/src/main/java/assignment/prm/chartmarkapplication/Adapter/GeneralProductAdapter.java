@@ -1,8 +1,10 @@
 package assignment.prm.chartmarkapplication.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import assignment.prm.chartmarkapplication.CompareActivity;
 import assignment.prm.chartmarkapplication.GlobalVariable;
+import assignment.prm.chartmarkapplication.LoveListActivity;
 import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 import assignment.prm.chartmarkapplication.R;
 
@@ -70,6 +74,10 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                         ImageButton ib = (ImageButton) v;
                         ib.setImageResource(0); }
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    if(((GlobalVariable) context.getApplicationContext()).isInCompareActivity){
+                        Intent intent = new Intent(context, CompareActivity.class);
+                        context.startActivity(intent);
+                    }
                 } else {
                     String message = ((GlobalVariable) context.getApplicationContext()).addToCompareList(generalProduct);
                     if(!message.contains("Add FAIL")&&!message.contains("wrong")){
@@ -90,6 +98,10 @@ public class GeneralProductAdapter extends RecyclerView.Adapter<GeneralProductAd
                         ib.setImageResource(0);
                     }
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    if(((GlobalVariable) context.getApplicationContext()).isInLoveActivity){
+                        Intent intent = new Intent(context, LoveListActivity.class);
+                        context.startActivity(intent);
+                    }
                 } else {
                     String message = ((GlobalVariable) context.getApplicationContext()).addToLoveList(generalProduct);
                     if(!message.contains("wrong")){

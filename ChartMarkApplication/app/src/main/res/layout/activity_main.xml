@@ -40,7 +40,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="30dp"
                 android:background="@drawable/icon_list"
                 android:onClick="clickToViewCompareList" />
         </android.support.v7.widget.Toolbar>
@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="Search for device you need here: " />
 
@@ -64,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:text="Search by"
                 android:layout_marginHorizontal="20dp"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="10dp"/>
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -76,9 +76,8 @@
                 <Spinner
                     android:id="@+id/spnCategory"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="35dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginRight="40dp"
                     android:spinnerMode="dropdown"
                     android:background="@android:color/transparent"
@@ -100,10 +99,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:hint="product name. Ex: zenbook"
-
                 />
 
             <Button
@@ -111,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:onClick="clickToSearch"
                 android:paddingLeft="20dp"
                 android:text="Search"
@@ -122,13 +120,41 @@
 
         </LinearLayout>
 
-        <FrameLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/fragment_container"
+            android:layout_height="match_parent"
             android:layout_marginTop="20dp">
 
-        </FrameLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingHorizontal="10dp">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/fragment_container"
+                    >
+
+                </FrameLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Recent viewed products: "
+                    android:id="@+id/tvHistoryList"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvHistoryList">
+
+                </android.support.v7.widget.RecyclerView>
+            </LinearLayout>
+
+        </ScrollView>
+
     </LinearLayout>
 
 

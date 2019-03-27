@@ -29,6 +29,7 @@ public class LoveListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_love_list);
         setMenu();
+        ((GlobalVariable) getApplication()).isInLoveActivity = true;
 
         tvLoveList = findViewById(R.id.txtLoveList);
         rvLoveProducts = findViewById(R.id.rvLoveProducts);

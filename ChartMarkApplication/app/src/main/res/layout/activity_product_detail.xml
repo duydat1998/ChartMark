@@ -37,7 +37,7 @@
                 android:layout_width="20dp"
                 android:id="@+id/btnCompareList"
                 android:background="@drawable/icon_list"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"
@@ -146,6 +146,32 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     android:id="@+id/iv_product_image3"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Go to Buy"
+                    android:textAllCaps="false"
+                    android:onClick="clickToSearchOnInternet"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="10dp"
+                    android:paddingHorizontal="20dp"
+                    android:layout_marginHorizontal="100dp"
+                    />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Recent viewed products: "
+                    android:id="@+id/tvHistoryList"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rvHistoryList">
+
+                </android.support.v7.widget.RecyclerView>
             </LinearLayout>
         </ScrollView>
 

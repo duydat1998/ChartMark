@@ -36,7 +36,7 @@
                 android:layout_width="20dp"
                 android:id="@+id/btnCompareList"
                 android:background="@drawable/icon_list"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="end"

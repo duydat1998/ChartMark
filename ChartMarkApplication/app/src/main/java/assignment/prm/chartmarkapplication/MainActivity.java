@@ -7,6 +7,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
@@ -14,19 +16,49 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import assignment.prm.chartmarkapplication.Adapter.GeneralProductAdapter;
+import assignment.prm.chartmarkapplication.Model.GeneralProduct;
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private Spinner productCategory;
     private String searchCategory;
+    private RecyclerView rvHistoryList;
+    private TextView tvHistoryList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setMenu();
         initializeSpinner();
+
+        rvHistoryList = findViewById(R.id.rvHistoryList);
+        tvHistoryList = findViewById(R.id.tvHistoryList);
+
+        List<GeneralProduct> tmpHistoryList = new ArrayList<>(((GlobalVariable) getApplication()).getHistoryList());
+        if(tmpHistoryList.size() > 0){
+            rvHistoryList = findViewById(R.id.rvHistoryList);
+            rvHistoryList.setLayoutManager(new GridLayoutManager(this, 2));
+            rvHistoryList.setAdapter(new GeneralProductAdapter(tmpHistoryList, this, new GeneralProductAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(GeneralProduct item) {
+                    Intent intent = new Intent(getApplicationContext(), ProductDetailActivity.class);
+                    intent.putExtra("category", item.category);
+                    intent.putExtra("id", item.ID + "");
+                    intent.putExtra("brandId", item.brandId);
+                    startActivity(intent);
+                }
+            }));
+        } else {
+            tvHistoryList.setVisibility(View.INVISIBLE);
+        }
     }
 
     private void initializeSpinner(){
